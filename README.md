@@ -42,3 +42,63 @@ Later, we will also tackle JavaScript / NodeJS, for the same reasons as Python.
 ARVOS needs to be easy to install.
 
 The exact CLI and output (e.g., human-readable, colored terminal, CSV, JSON) are left as hypothesis to be answered during the technical validation.
+
+## Running ARVOS PoC
+
+### Using a demo Java application in Docker
+
+1. In a terminal run the demo Java application (containing netty dependencies) using Docker.
+
+    ```
+    docker run -d --name app -p 8080:8080 -v $PWD/logs:/stack_logs moule3053/netty-demo
+    ```
+2. After a few moments, run the following command to call two endpoints of the application.
+
+    ```
+    while true; do curl http://localhost:8080/actuator/health; curl http://localhost:8080/actuator/info; done
+    ```
+3. In a second terminal, run the following commands to generate stack traces and to run the tracer application `arvos-poc`.
+
+    ```
+    export APP=app
+    docker exec -it app /bin/bash -c "/get_stack_traces.sh" && docker pull moule3053/arvos-poc && docker run -it --rm -v $PWD/logs:/stack_logs -v /lib/modules/$(uname -r):/lib/modules/$(uname -r) -v /usr/src:/usr/src --privileged --pid container:$APP moule3053/arvos-poc $(docker exec -ti $APP pidof java)
+    ```
+4. If everything goes well, you should see something like the following figure.
+   ![Screenshot from 2022-02-11 09-31-27](https://user-images.githubusercontent.com/14330171/153579834-872f6007-ff5a-43aa-8898-6613cd350ce0.png)
+
+### Using your own Java application using Docker
+
+To scan your own Java application, you need to:
+
+1. Build a `jar` file for your application. Your application should be able to run in JVM 17.
+2. Create a Docker image for your application based on the `moule3053/jdk-docker-jstack` Docker image. Create a `Dockerfile` that looks like the below in the same directory where your `jar` file resides.
+    ```
+    FROM moule3053/jdk-docker-jstack
+    RUN mkdir /app
+    COPY YOUR-APPLICATION.jar /app/YOUR-APPLICATION.jar
+    COPY entrypoint.sh /entrypoint.sh
+    RUN chmod +x /entrypoint.sh
+    ENTRYPOINT ["/entrypoint.sh"]
+    ```
+3. You should also have a file called `entrypoint.sh` in the same directory as `Dockerfile`. The contents of `entrypoint.sh` should look like
+    ```
+    #!/bin/bash
+
+    /jdk/bin/java -XX:+ExtendedDTraceProbes -XX:+PreserveFramePointer -XX:+StartAttachListener -XX:+UnlockDiagnosticVMOptions -XX:+DebugNonSafepoints -XX:-OmitStackTraceInFastThrow -XX:+ShowHiddenFrames -jar /app/YOUR-APPLICATION.jar
+    ```
+4. Replace `YOUR-APPLICATION` in the above two file with the name of your `jar` file.
+5. Build the Docker image
+    ```
+    docker build -t YOUR-DOCKER-REGISTRY/APPLICATION-IMAGE-NAME .
+    ```
+6. In a first terminal, run your application using Docker.
+    ```
+    docker run -d --name app -p YOUR-PORT:YOUR-PORT -v $PWD/logs:/stack_logs YOUR-DOCKER-REGISTRY/APPLICATION-IMAGE-NAME
+    ```
+7. Continuously call a few endppoints of your application.
+8. In a second terminal, run the following commands to generate stack traces and to run the tracer application `arvos-poc`.
+
+    ```
+    export APP=app
+    docker exec -it app /bin/bash -c "/get_stack_traces.sh" && docker pull moule3053/arvos-poc && docker run -it --rm -v $PWD/logs:/stack_logs -v /lib/modules/$(uname -r):/lib/modules/$(uname -r) -v /usr/src:/usr/src --privileged --pid container:$APP moule3053/arvos-poc $(docker exec -ti $APP pidof java)
+    ``` 
