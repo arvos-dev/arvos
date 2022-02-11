@@ -61,7 +61,7 @@ The exact CLI and output (e.g., human-readable, colored terminal, CSV, JSON) are
 
     ```
     export APP=app
-    docker exec -it app /bin/bash -c "/get_stack_traces.sh" && docker pull moule3053/arvos-poc && docker run -it --rm -v $PWD/logs:/stack_logs -v /lib/modules/$(uname -r):/lib/modules/$(uname -r) -v /usr/src:/usr/src --privileged --pid container:$APP moule3053/arvos-poc $(docker exec -ti $APP pidof java)
+    docker exec -it $APP /bin/bash -c "/get_stack_traces.sh" && docker pull moule3053/arvos-poc && docker run -it --rm -v $PWD/logs:/stack_logs -v /lib/modules/$(uname -r):/lib/modules/$(uname -r) -v /usr/src:/usr/src --privileged --pid container:$APP moule3053/arvos-poc $(docker exec -ti $APP pidof java)
     ```
 4. If everything goes well, you should see something like the following figure.
    ![Screenshot from 2022-02-11 09-31-27](https://user-images.githubusercontent.com/14330171/153579834-872f6007-ff5a-43aa-8898-6613cd350ce0.png)
@@ -100,5 +100,5 @@ To scan your own Java application, you need to:
 
     ```
     export APP=app
-    docker exec -it app /bin/bash -c "/get_stack_traces.sh" && docker pull moule3053/arvos-poc && docker run -it --rm -v $PWD/logs:/stack_logs -v /lib/modules/$(uname -r):/lib/modules/$(uname -r) -v /usr/src:/usr/src --privileged --pid container:$APP moule3053/arvos-poc $(docker exec -ti $APP pidof java)
+    docker exec -it $APP /bin/bash -c "/get_stack_traces.sh" && docker pull moule3053/arvos-poc && docker run -it --rm -v $PWD/logs:/stack_logs -v /lib/modules/$(uname -r):/lib/modules/$(uname -r) -v /usr/src:/usr/src --privileged --pid container:$APP moule3053/arvos-poc $(docker exec -ti $APP pidof java)
     ``` 
