@@ -30,8 +30,7 @@ class CallEvent(ct.Structure):
         ("method", ct.c_char * 128)
     ]
 
-def readResults():
-
+def read_results():
     # period
     PERIOD = 10
     
@@ -121,7 +120,7 @@ def print_event(cpu, data, size):
 def run_uflow(pid):
     program = """
     struct call_t {
-        u64 pid;                    // (tgid << 32) + pid from bpf_get_current...
+        u64 pid;
         char clazz[128];
         char method[128];
     };
@@ -179,7 +178,7 @@ pid = args.pid
 # Multi-processing
 
 p = mp.Process(target=run_uflow, args=(pid,))
-q = mp.Process(target=readResults)
+q = mp.Process(target=read_results)
 p.start()
 q.start()
 p.join()
