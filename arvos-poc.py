@@ -50,9 +50,8 @@ BPF_HASH(counts, struct method_t, u64);
 
 int trace_entry(struct pt_regs *ctx) {
     u64 clazz = 0, method = 0, val = 0;
-    u64 *valp;
+    u64 *p;
     struct entry_t data = {0};
-    u64 timestamp = bpf_ktime_get_ns();
     data.pid = bpf_get_current_pid_tgid();
     bpf_usdt_readarg(2, ctx, &clazz);
     bpf_usdt_readarg(4, ctx, &method);
@@ -61,12 +60,13 @@ int trace_entry(struct pt_regs *ctx) {
     bpf_probe_read(&data.method.method, sizeof(data.method.method),
                    (void *)method);
 
-    valp = counts.lookup_or_try_init(&data.method, &val);
-    if (valp) {
-        ++(*valp);
+    p = counts.lookup(&data.method);
+    if (p != 0) {
+        val = *p;
     }
+    val++;
+    counts.update(&data.method, &val);
 
-    //entry.update(&data, &timestamp);
     return 0;
 }
 """
