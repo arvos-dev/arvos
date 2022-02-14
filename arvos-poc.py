@@ -96,6 +96,8 @@ with open(stack_trace) as f:
 # Load it into an array
 stack_array = stack_output.split(os.linesep + os.linesep)
 
+# keep track of invoked vulnerable symbols
+vuln_count = 0
 
 print("\nTracing Java calls in process %d and scanning for vulnerable symbols ... Ctrl-C to quit." % (args.pid))
 
@@ -116,6 +118,8 @@ while True:
             for sym in item['symbols']:
                 for i in range(len(invoked_class_list)):
                     if sym['class_name'] in invoked_class_list[i] and sym['method_name'] in invoked_method_list[i]:
+
+                        vuln_count += 1
                     
                         t_now = datetime.now().astimezone().strftime("%Y-%m-%d %H:%M:%S")
 
@@ -134,6 +138,9 @@ while True:
                                 print(f"\t{bcolors.FAIL}Stack trace:{bcolors.ENDC}")
                                 print("\t", trace)
                                 break
+
+        if (vuln_count == 0):
+            print(f"{bcolors.OKGREEN}No vulnerable symbols found.{bcolors.ENDC}")
 
     except KeyboardInterrupt:
         print("EXITING ...")
