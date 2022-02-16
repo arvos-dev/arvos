@@ -1,6 +1,4 @@
 #!/usr/bin/python3
-# @lint-avoid-python-3-compatibility-imports
-
 import argparse
 from datetime import datetime
 from time import sleep
@@ -91,15 +89,22 @@ f.close()
 
 # Stack trace file
 stack_trace = "/stack_logs/stack-traces.log"
-with open(stack_trace) as f:
-    stack_output = f.read()
-# Load it into an array
-stack_array = stack_output.split(os.linesep + os.linesep)
+
+# If stack traces don't exist, continue without it
+
+# Check if scanning has started
+if not os.path.exists(stack_trace):
+    print(f"{bcolors.WARNING}Stack traces don't exist ... continuing without stack traces ...{bcolors.ENDC}\n")
+else:
+    with open(stack_trace) as f:
+        stack_output = f.read()
+    # Load it into an array
+    stack_array = stack_output.split(os.linesep + os.linesep)
 
 # keep track of invoked vulnerable symbols
 vuln_count = 0
 
-print("\nTracing Java calls in process %d and scanning for vulnerable symbols ... Ctrl-C to quit." % (args.pid))
+print(f"{bcolors.OKGREEN}\nTracing Java calls in process %d and scanning for vulnerable symbols ... Ctrl-C to quit.{bcolors.ENDC}" % (args.pid))
 
 # Loop until exit
 while True:
@@ -132,12 +137,13 @@ while True:
                         print(f"\t{bcolors.FAIL}Confidence:{bcolors.ENDC} {item['confidence']}")
                         print(f"\t{bcolors.FAIL}Spread:{bcolors.ENDC} {item['spread']}")
 
-                        for trace in stack_array:
-                            search_term = sym['class_name'] + "." + sym['method_name']
-                            if search_term in trace:
-                                print(f"\t{bcolors.FAIL}Stack trace:{bcolors.ENDC}")
-                                print("\t", trace)
-                                break
+                        if os.path.exists(stack_trace):
+                            for trace in stack_array:
+                                search_term = sym['class_name'] + "." + sym['method_name']
+                                if search_term in trace:
+                                    print(f"\t{bcolors.FAIL}Stack trace:{bcolors.ENDC}")
+                                    print("\t", trace)
+                                    break
 
         if (vuln_count == 0):
             print(f"{bcolors.OKGREEN}No vulnerable symbols found.{bcolors.ENDC}")
