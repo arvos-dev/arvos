@@ -1,0 +1,86 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "JSON Schema for Arvos Vulnerable Function Symbols Feed version 1.0",
+  "id": "https://github.com/arvos-dev/arvos/vfs_scheme.schema",
+  "definitions": {
+    "def_symbol": {
+      "description": "Vuln Func Symbol",
+      "type": "object",
+      "properties": {
+        "footprint": {
+          "type": "string"
+        },
+        "parameters": {
+          "type": "string"
+        },
+        "method_name": {
+          "type": "string"
+        },
+        "class_name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "footprint",
+        "parameters",
+        "method_name",
+        "class_name"
+      ]
+    },
+    "def_vulnfunc": {
+      "description": "Defines a Vulnerable Function.",
+      "properties": {
+        "vulnerability": {
+          "description": "Vulnerability ID, such as a CVE"
+          "type": "string"
+        },
+        "repository": {
+          "type": "string"
+        },
+        "symbols": {
+          "type": "array"
+          "items": {
+            "$ref": "#/definitions/def_symbol"
+          }
+        },
+        "language": {
+          "type": "string"
+        },
+        "confidence": {
+          "type": "number"
+          "minimum": 0,
+          "maximum": 100
+        },
+        "spread": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "updated_at": {
+          "type": "string"
+        },
+      },
+      "required": [
+        "vulnerability",
+        "repository",
+        "symbols",
+        "language",
+        "confidence",
+        "spead",
+        "updated_at"
+      ]
+    }
+  },
+  "type": "object",
+  "properties": {
+    "VulnFuncItems": {
+      "description": "Items containing Vulnerable Functions",
+      "type": "array",
+      "items": {"$ref": "#/definitions/def_vulnfunc"}
+    }
+  },
+  "required": [
+    "VulnFuncItems"
+  ]
+}
+
