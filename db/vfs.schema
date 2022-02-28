@@ -27,18 +27,42 @@
         "class_name"
       ]
     },
+    "def_version_range": {
+      "description": "Version Range for a vulnerability",
+      "type": "object",
+      "properties": {
+        "gt": {
+          "type": "string"
+        },
+        "gte": {
+          "type": "string"
+        },
+        "lt": {
+          "type": "string"
+        },
+        "lte": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "gt",
+        "gte",
+        "lt",
+        "lte"
+      ]
+    },
     "def_vulnfunc": {
       "description": "Defines a Vulnerable Function.",
       "properties": {
         "vulnerability": {
-          "description": "Vulnerability ID, such as a CVE"
+          "description": "Vulnerability ID, such as a CVE",
           "type": "string"
         },
         "repository": {
           "type": "string"
         },
         "symbols": {
-          "type": "array"
+          "type": "array",
           "items": {
             "$ref": "#/definitions/def_symbol"
           }
@@ -47,7 +71,7 @@
           "type": "string"
         },
         "confidence": {
-          "type": "number"
+          "type": "number",
           "minimum": 0,
           "maximum": 100
         },
@@ -59,6 +83,18 @@
         "updated_at": {
           "type": "string"
         },
+        "package_name": {
+          "type": "string"
+        },
+        "package_manager": {
+          "type": "string"
+        },
+        "version_range": {
+          "type": "object",
+          "items": {
+            "$ref": "#/definitions/def_version_range"
+          }
+        }
       },
       "required": [
         "vulnerability",
@@ -67,20 +103,24 @@
         "language",
         "confidence",
         "spead",
-        "updated_at"
+        "updated_at",
+        "package_name",
+        "package_manager",
+        "version_range"
       ]
     }
   },
   "type": "object",
   "properties": {
-    "VulnFuncItems": {
+    "VF_items": {
       "description": "Items containing Vulnerable Functions",
       "type": "array",
-      "items": {"$ref": "#/definitions/def_vulnfunc"}
+      "items": {
+        "$ref": "#/definitions/def_vulnfunc"
+      }
     }
   },
   "required": [
-    "VulnFuncItems"
+    "VF_items"
   ]
 }
-
