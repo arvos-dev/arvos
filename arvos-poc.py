@@ -5,6 +5,7 @@ from time import sleep
 from bcc import BPF, USDT
 import json
 import os
+from parsexml import parse_xml
 
 # period
 PERIOD = 10
@@ -28,7 +29,16 @@ parser = argparse.ArgumentParser(
 parser.add_argument("pid", type=int, help="process id to attach to")
 parser.add_argument("-v", "--verbose", action="store_true",
     help="verbose mode: print the BPF program (for debugging purposes)")
+parser.add_argument("--pom", "--only-versions-from-pom", type=str)
+
 args = parser.parse_args()
+
+# pom file parser
+if not args.pom:
+    print(f"{bcolors.WARNING}pom.xml not provided. Version filtering cannot be performed. This will increase the number of false positives.\n{bcolors.ENDC}")
+else:
+    pom_file = args.pom
+    dep_list = parse_xml(pom_file)
 
 # BPF program
 program = """
@@ -117,11 +127,11 @@ while True:
         for k,v in bpf["counts"].items():
             invoked_class_list.append(k.clazz.decode('utf-8', 'replace').replace('/', '.'))
             invoked_method_list.append(k.method.decode('utf-8', 'replace'))
-
-
-        for item in vulnData:
-            for sym in item['symbols']:
-                for i in range(len(invoked_class_list)):
+        
+        for i in range(len(invoked_class_list)):
+            for item in vulnData:
+                for sym in item['symbols']:
+                
                     if sym['class_name'] in invoked_class_list[i] and sym['method_name'] in invoked_method_list[i]:
 
                         vuln_count += 1
