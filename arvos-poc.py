@@ -93,9 +93,12 @@ if args.verbose:
 bpf = BPF(text=program, usdt_contexts=[usdt] if usdt else [])
 
 # Load vulnerability dataset
-f = open('arvos_vfs.json')
-vulnData = json.load(f)
-f.close()
+f = 'arvos_vfs_java.json'
+
+with open(f) as json_file:
+    data = json_file.read()
+
+vuln_obj = json.loads(data)
 
 # Stack trace file
 stack_trace = "/stack_logs/stack-traces.log"
@@ -129,7 +132,7 @@ while True:
             invoked_method_list.append(k.method.decode('utf-8', 'replace'))
         
         for i in range(len(invoked_class_list)):
-            for item in vulnData:
+            for item in vuln_obj['VF_items']:
                 for sym in item['symbols']:
                 
                     if sym['class_name'] in invoked_class_list[i] and sym['method_name'] in invoked_method_list[i]:
@@ -146,6 +149,9 @@ while True:
                         print(f"\t{bcolors.FAIL}Invoked Method:{bcolors.ENDC} {sym['method_name']}")
                         print(f"\t{bcolors.FAIL}Confidence:{bcolors.ENDC} {item['confidence']}")
                         print(f"\t{bcolors.FAIL}Spread:{bcolors.ENDC} {item['spread']}")
+                        print(f"\t{bcolors.FAIL}Package name:{bcolors.ENDC} {item['package_name']}")
+                        print(f"\t{bcolors.FAIL}Package manager:{bcolors.ENDC} {item['package_manager']}")
+                        print(f"\t{bcolors.FAIL}Version range:{bcolors.ENDC} {item['version_range']}")
 
                         if os.path.exists(stack_trace):
                             for trace in stack_array:
