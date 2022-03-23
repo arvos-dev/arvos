@@ -98,7 +98,23 @@ To scan your own Java application, you need to:
 7. Continuously call a few endppoints of your application.
 8. In a second terminal, run the following commands to generate stack traces and to run the tracer application `arvos-poc`.
 
-    ```
-    export APP=app
-    docker exec -it $APP /bin/bash -c "/get_stack_traces.sh" && docker pull moule3053/arvos-poc && docker run -it --rm -v $PWD/logs:/stack_logs -v /lib/modules/$(uname -r):/lib/modules/$(uname -r) -v /usr/src:/usr/src --privileged --pid container:$APP moule3053/arvos-poc $(docker exec -ti $APP pidof java)
-    ``` 
+    - In case your kernel version >= 4.17 
+
+        ```
+        export APP=app
+        docker exec -it $APP /bin/bash -c "/get_stack_traces.sh" && docker pull moule3053/arvos-poc && docker run -it --rm -v $PWD/logs:/stack_logs -v /lib/modules/$(uname -r):/lib/modules/$(uname -r) -v /usr/src:/usr/src --privileged --pid container:$APP moule3053/arvos-poc $(docker exec -ti $APP pidof java)
+        ``` 
+
+    - In case your kernel version < 4.17
+
+        You need to mount the debugfs by running : 
+        ```
+        sudo mount -t debugfs debugfs /sys/kernel/debug
+        ```
+
+        And then run the following command: 
+
+        ```
+        export APP=app
+        docker exec -it $APP /bin/bash -c "/get_stack_traces.sh" && docker pull moule3053/arvos-poc && docker run -it --rm -v $PWD/logs:/stack_logs -v  /sys/kernel/debug:/sys/kernel/debug:rw -v /lib/modules/$(uname -r):/lib/modules/$(uname -r) -v /usr/src:/usr/src --privileged --pid container:$APP moule3053/arvos-poc $(docker exec -ti $APP pidof java)
+        ```
