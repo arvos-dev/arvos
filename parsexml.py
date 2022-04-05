@@ -14,6 +14,13 @@ def parse_xml(filename):
 
     deps = root.findall(".//xmlns:dependency", namespaces=namespaces)
     for d in deps:
+        groupId = d.find("xmlns:groupId", namespaces=namespaces)
+        if groupId is None:
+            groupId_text = ""
+        else:
+            groupId_text = groupId.text
+
+
         artifactId = d.find("xmlns:artifactId", namespaces=namespaces)
         if artifactId is None:
             artifactId_text = ""
@@ -28,6 +35,6 @@ def parse_xml(filename):
         else:
             version_text = version.text
         
-        dep_list.append({"artifactId": artifactId_text, "version": version_text})
+        dep_list.append({"groupId": groupId_text,"artifactId": artifactId_text, "version": version_text})
 
     return dep_list
