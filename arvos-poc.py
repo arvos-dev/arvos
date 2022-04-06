@@ -6,9 +6,34 @@ from bcc import BPF, USDT
 import json
 import os
 from parsexml import parse_xml
+from packaging.version import parse
+from packaging.specifiers import SpecifierSet
 
 # period
 PERIOD = 10
+
+def filter_relevant_vulnerabilities(db, dependencies):
+    operators = {
+        "gt": ">",
+        "gte": ">=",
+        "lt": "<",
+        "lte": "<="
+    }
+
+    indices_to_be_deleted = []
+    for dep in dependencies:
+        if dep['version']:
+            package_name = dep['groupId'] + ":" + dep['artifactId']
+            package_version = parse(dep['version'])
+            for index, vuln in enumerate(db):
+                if package_name == vuln['package_name']:
+                    version_range = list(filter(lambda e: e[1] != '~', list(vuln['version_range'].items())))
+                    specifier_set = ",".join(list(map(lambda e: operators[e[0]] + e[1],version_range)))
+                    if not package_version in SpecifierSet(specifier_set):
+                        indices_to_be_deleted.append(index)
+    for i in sorted(indices_to_be_deleted, reverse=True):
+        del db[i]
+    return db
 
 # Text colors
 class bcolors:
@@ -98,7 +123,10 @@ f = 'arvos_vfs_java.json'
 with open(f) as json_file:
     data = json_file.read()
 
-vuln_obj = json.loads(data)
+if not args.pom:
+    vuln_obj = json.load(data)["VF_items"] 
+else :
+    vuln_obj = filter_relevant_vulnerabilities(json.loads(data)["VF_items"], dep_list)
 
 # Stack trace file
 stack_trace = "/stack_logs/stack-traces.log"
@@ -123,6 +151,7 @@ print(f"{bcolors.OKGREEN}\nTracing Java calls in process %d and scanning for vul
 while True:
     try:
         sleep(PERIOD)
+        os.system('clear')
 
         invoked_class_list = []
         invoked_method_list = []
@@ -132,7 +161,7 @@ while True:
             invoked_method_list.append(k.method.decode('utf-8', 'replace'))
         
         for i in range(len(invoked_class_list)):
-            for item in vuln_obj['VF_items']:
+            for item in vuln_obj:
                 for sym in item['symbols']:
                 
                     if sym['class_name'] in invoked_class_list[i] and sym['method_name'] in invoked_method_list[i]:
