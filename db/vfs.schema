@@ -89,7 +89,13 @@
         "package_manager": {
           "type": "string"
         },
-        "version_range": {
+        "cpe_version_range": {
+          "type": "object",
+          "items": {
+            "$ref": "#/definitions/def_version_range"
+          }
+        },
+        "package_version_range": {
           "type": "object",
           "items": {
             "$ref": "#/definitions/def_version_range"
@@ -106,7 +112,8 @@
         "updated_at",
         "package_name",
         "package_manager",
-        "version_range"
+        "cpe_version_range"
+        "package_version_range"
       ]
     }
   },
