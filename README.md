@@ -84,7 +84,7 @@ To scan your own Java application, you need to:
     ```
     #!/bin/bash
 
-    /jdk/bin/java -XX:+ExtendedDTraceProbes -XX:+PreserveFramePointer -XX:+StartAttachListener -XX:+UnlockDiagnosticVMOptions -XX:+DebugNonSafepoints -XX:-OmitStackTraceInFastThrow -XX:+ShowHiddenFrames -jar /app/YOUR-APPLICATION.jar
+    /jdk/bin/java -XX:+ExtendedDTraceProbes -XX:+PreserveFramePointer -XX:+StartAttachListener -XX:+UnlockDiagnosticVMOptions -XX:+DebugNonSafepoints -XX:-OmitStackTraceInFastThrow -XX:+ShowHiddenFrames --add-opens java.base/java.lang=ALL-UNNAMED  -XX:+TieredCompilation -jar /app/YOUR-APPLICATION.jar
     ```
 4. Replace `YOUR-APPLICATION` in the above two file with the name of your `jar` file.
 5. Build the Docker image
@@ -93,28 +93,17 @@ To scan your own Java application, you need to:
     ```
 6. In a first terminal, run your application using Docker.
     ```
-    docker run -d --name app -p YOUR-PORT:YOUR-PORT -v $PWD/logs:/stack_logs YOUR-DOCKER-REGISTRY/APPLICATION-IMAGE-NAME
+    docker run -d --name app --net host  YOUR-DOCKER-REGISTRY/APPLICATION-IMAGE-NAME
     ```
 7. Continuously call a few endppoints of your application.
 8. In a second terminal, run the following commands to generate stack traces and to run the tracer application `arvos-poc`.
 
-    - In case your kernel version >= 4.17 
-
-        ```
-        export APP=app
-        docker exec -it $APP /bin/bash -c "/get_stack_traces.sh" && docker pull moule3053/arvos-poc && docker run -it --rm -v $PWD/logs:/stack_logs -v /lib/modules/$(uname -r):/lib/modules/$(uname -r) -v /usr/src:/usr/src --privileged --pid container:$APP moule3053/arvos-poc $(docker exec -ti $APP pidof java)
-        ``` 
-
-    - In case your kernel version < 4.17
-
-        You need to mount the debugfs by running : 
+    - Make sure the debugfs is mounted : 
         ```
         sudo mount -t debugfs debugfs /sys/kernel/debug
         ```
-
-        And then run the following command: 
-
+    - Run the tracer :
         ```
         export APP=app
-        docker exec -it $APP /bin/bash -c "/get_stack_traces.sh" && docker pull moule3053/arvos-poc && docker run -it --rm -v $PWD/logs:/stack_logs -v  /sys/kernel/debug:/sys/kernel/debug:rw -v /lib/modules/$(uname -r):/lib/modules/$(uname -r) -v /usr/src:/usr/src --privileged --pid container:$APP moule3053/arvos-poc $(docker exec -ti $APP pidof java)
-        ```
+        docker exec -it $APP /bin/bash -c "wget https://arthas.aliyun.com/arthas-boot.jar && java -jar arthas-boot.jar --attach-only --select YOUR-APPLICATION.jar" &&  docker run -it --rm -v  /sys/kernel/debug:/sys/kernel/debug:rw -v /lib/modules/$(uname -r):/lib/modules/$(uname -r) -v /usr/src:/usr/src --privileged --pid container:$APP ayoubensalem/arvos-poc $(docker exec -ti $APP pidof java)
+        ``` 

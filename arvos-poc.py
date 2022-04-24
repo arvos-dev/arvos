@@ -6,9 +6,46 @@ from bcc import BPF, USDT
 import json
 import os
 from parsexml import parse_xml
+import arthas
+import requests 
+import ray
 
+TRACE_TIME = int(os.getenv('TRACE_TIME', 1)) * 6
 # period
 PERIOD = 10
+ENDPOINT = "http://localhost:8563/api"
+STACKS_DIR = "/stacks"
+ray.init()
+
+@ray.remote
+def pull_results(art):
+  gotResults = False
+  while not gotResults:
+    r = requests.post(ENDPOINT, json={'action': 'pull_results', 'sessionId': art.sessionId, 'consumerId': art.consumerId})
+    if r.json()['state'] == "SUCCEEDED":
+        if len(r.json()['body']['results']) > 0:
+          for result in r.json()['body']['results']:
+            if result['jobId'] == 0 :
+              continue
+            if result['type'] == 'status' and result['statusCode'] == -1:
+              print("Skipping symbol %s as it was not loaded in the JVM" % ".".join(art.command.split(" ")[1:]))
+              gotResults = True
+              art.interrupt_job()
+              art.close_session()
+            if result['jobId'] != 0  and result['type'] == "stack":
+              gotResults = True
+              with open(f"%s/%s.stack" % (STACKS_DIR, ".".join(art.command.split(" ")[1:])), "w") as f:
+                  for stacktrace in result['stackTrace'] :
+                    if 'fileName' in stacktrace.keys():
+                      f.write("at %s.%s(%s:%s) \n" % (stacktrace['className'], stacktrace['methodName'], stacktrace['fileName'], stacktrace['lineNumber']))
+              art.interrupt_job()
+              art.close_session()
+              break
+        else :
+          sleep(2)
+    else :
+      raise RuntimeError(r.json()['message'])
+
 
 # Text colors
 class bcolors:
@@ -100,70 +137,67 @@ with open(f) as json_file:
 
 vuln_obj = json.loads(data)
 
-# Stack trace file
-stack_trace = "/stack_logs/stack-traces.log"
-
-# If stack traces don't exist, continue without it
-
-# Check if scanning has started
-if not os.path.exists(stack_trace):
-    print(f"{bcolors.WARNING}Stack traces don't exist ... continuing without stack traces ...{bcolors.ENDC}\n")
-else:
-    with open(stack_trace) as f:
-        stack_output = f.read()
-    # Load it into an array
-    stack_array = stack_output.split(os.linesep + os.linesep)
-
 # keep track of invoked vulnerable symbols
 vuln_count = 0
 
 print(f"{bcolors.OKGREEN}\nTracing Java calls in process %d and scanning for vulnerable symbols ... Ctrl-C to quit.{bcolors.ENDC}" % (args.pid))
 
+sleep(1)
+os.system('clear')
+
 # Loop until exit
-while True:
-    try:
-        sleep(PERIOD)
+seen  = []
+parallel_functions  = []
+while TRACE_TIME != 0:
+    TRACE_TIME -= 1 
+    sleep(PERIOD)
 
-        invoked_class_list = []
-        invoked_method_list = []
+    invoked_class_list = []
+    invoked_method_list = []
+
+    for k,v in bpf["counts"].items():
+        invoked_class_list.append(k.clazz.decode('utf-8', 'replace').replace('/', '.'))
+        invoked_method_list.append(k.method.decode('utf-8', 'replace'))
     
-        for k,v in bpf["counts"].items():
-            invoked_class_list.append(k.clazz.decode('utf-8', 'replace').replace('/', '.'))
-            invoked_method_list.append(k.method.decode('utf-8', 'replace'))
-        
-        for i in range(len(invoked_class_list)):
-            for item in vuln_obj['VF_items']:
-                for sym in item['symbols']:
-                
-                    if sym['class_name'] in invoked_class_list[i] and sym['method_name'] in invoked_method_list[i]:
+    for i in range(len(invoked_class_list)):
+        for item in vuln_obj:
+            for sym in item['symbols']:
+                if sym['class_name'] in invoked_class_list[i] and sym['method_name'] in invoked_method_list[i]:
+                    traced = sym['class_name'] + " " + sym['method_name']
+                    if not traced in seen :
+                        vuln_count += 1 
+                        art = arthas.Arthas()
+                        art.async_exec("stack %s" % traced)
+                        seen.append(traced)
+                        ref = pull_results.remote(art)
+                        parallel_functions.append(ref)
 
-                        vuln_count += 1
-                    
-                        t_now = datetime.now().astimezone().strftime("%Y-%m-%d %H:%M:%S")
 
-                        print(f"\n{bcolors.FAIL}Vulnerable symbol invoked!!!")
-                        print(f"\t{bcolors.FAIL}Time:{bcolors.ENDC} {t_now}")
-                        print(f"\t{bcolors.FAIL}Vulnerability:{bcolors.ENDC} {item['vulnerability']}")
-                        print(f"\t{bcolors.FAIL}Repository:{bcolors.ENDC} {item['repository']}")
-                        print(f"\t{bcolors.FAIL}Invoked Class:{bcolors.ENDC} {sym['class_name']}")
-                        print(f"\t{bcolors.FAIL}Invoked Method:{bcolors.ENDC} {sym['method_name']}")
-                        print(f"\t{bcolors.FAIL}Confidence:{bcolors.ENDC} {item['confidence']}")
-                        print(f"\t{bcolors.FAIL}Spread:{bcolors.ENDC} {item['spread']}")
-                        print(f"\t{bcolors.FAIL}Package name:{bcolors.ENDC} {item['package_name']}")
-                        print(f"\t{bcolors.FAIL}Package manager:{bcolors.ENDC} {item['package_manager']}")
-                        print(f"\t{bcolors.FAIL}Version range:{bcolors.ENDC} {item['version_range']}")
+ray.get(parallel_functions)
 
-                        if os.path.exists(stack_trace):
-                            for trace in stack_array:
-                                search_term = sym['class_name'] + "." + sym['method_name']
-                                if search_term in trace:
-                                    print(f"\t{bcolors.FAIL}Stack trace:{bcolors.ENDC}")
-                                    print("\t", trace)
-                                    break
+print("Generating Report ...")
+print(f"Found %s vulnerable symbols that were invoked" % vuln_count)
 
-        if (vuln_count == 0):
-            print(f"{bcolors.OKGREEN}No vulnerable symbols found.{bcolors.ENDC}")
+for stackfile in os.listdir(STACKS_DIR):
+  f = os.path.join(STACKS_DIR, stackfile)
+  symbol = stackfile[:-6]
+  class_name = ".".join(symbol.split('.')[:-1])
+  method_name = symbol.split('.')[-1]
+  for item in vuln_obj:
+    for sym in item['symbols']:
+      if class_name == sym['class_name'] and method_name == sym['method_name']:
+        print(f"\n{bcolors.FAIL}Vulnerable symbol invoked!!!")
+        print(f"\t{bcolors.FAIL}Vulnerability:{bcolors.ENDC} {item['vulnerability']}")
+        print(f"\t{bcolors.FAIL}Repository:{bcolors.ENDC} {item['repository']}")
+        print(f"\t{bcolors.FAIL}Invoked Class:{bcolors.ENDC} {sym['class_name']}")
+        print(f"\t{bcolors.FAIL}Invoked Method:{bcolors.ENDC} {sym['method_name']}")
+        print(f"\t{bcolors.FAIL}Confidence:{bcolors.ENDC} {item['confidence']}")
+        print(f"\t{bcolors.FAIL}Spread:{bcolors.ENDC} {item['spread']}")
+        print(f"\t{bcolors.FAIL}Package name:{bcolors.ENDC} {item['package_name']}")
+        print(f"\t{bcolors.FAIL}Package manager:{bcolors.ENDC} {item['package_manager']}")
+        print(f"\t{bcolors.FAIL}Version range:{bcolors.ENDC} {item['version_range']}")
+        print(f"\t{bcolors.FAIL}Stack trace:{bcolors.ENDC}")
+        print("\t", open(f).read())
+        print("------------------------------------------------------------------------------")
 
-    except KeyboardInterrupt:
-        print("EXITING ...")
-        exit()
+
