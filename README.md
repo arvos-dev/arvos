@@ -105,5 +105,5 @@ To scan your own Java application, you need to:
     - Run the tracer :
         ```
         export APP=app
-        docker exec -it $APP /bin/bash -c "wget https://arthas.aliyun.com/arthas-boot.jar && java -jar arthas-boot.jar --attach-only --select YOUR-APPLICATION.jar" &&  docker run -it --rm -v  /sys/kernel/debug:/sys/kernel/debug:rw -v /lib/modules/$(uname -r):/lib/modules/$(uname -r) -v /usr/src:/usr/src --privileged --pid container:$APP ayoubensalem/arvos-poc $(docker exec -ti $APP pidof java)
+        docker exec -it $APP /bin/bash -c "wget https://arthas.aliyun.com/arthas-boot.jar && java -jar arthas-boot.jar --attach-only --select YOUR-APPLICATION.jar" &&  docker run -it --rm -e TRACE_TIME=2 -v  /sys/kernel/debug:/sys/kernel/debug:rw -v /lib/modules/$(uname -r):/lib/modules/$(uname -r) -v /usr/src:/usr/src --privileged --pid container:$APP ayoubensalem/arvos-poc $(docker exec -ti $APP pidof java)
         ``` 
