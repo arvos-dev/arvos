@@ -12,6 +12,7 @@ import arthas
 import requests
 import ray
 
+# Tracing time in minutes
 TRACE_TIME = int(os.getenv('TRACE_TIME', 1)) * 6
 # period
 PERIOD = 10
