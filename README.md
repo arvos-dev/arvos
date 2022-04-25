@@ -75,7 +75,7 @@ To scan your own Java application, you need to:
     ```
     FROM moule3053/jdk-docker-jstack
     RUN mkdir /app
-    COPY YOUR-APPLICATION.jar /app/YOUR-APPLICATION.jar
+    COPY YOUR-APPLICATION.jar /app/application.jar
     COPY entrypoint.sh /entrypoint.sh
     RUN chmod +x /entrypoint.sh
     ENTRYPOINT ["/entrypoint.sh"]
@@ -84,7 +84,7 @@ To scan your own Java application, you need to:
     ```
     #!/bin/bash
 
-    /jdk/bin/java -XX:+ExtendedDTraceProbes -XX:+PreserveFramePointer -XX:+StartAttachListener -XX:+UnlockDiagnosticVMOptions -XX:+DebugNonSafepoints -XX:-OmitStackTraceInFastThrow -XX:+ShowHiddenFrames --add-opens java.base/java.lang=ALL-UNNAMED  -XX:+TieredCompilation -jar /app/YOUR-APPLICATION.jar
+    /jdk/bin/java -XX:+ExtendedDTraceProbes -XX:+PreserveFramePointer -XX:+StartAttachListener -XX:+UnlockDiagnosticVMOptions -XX:+DebugNonSafepoints -XX:-OmitStackTraceInFastThrow -XX:+ShowHiddenFrames --add-opens java.base/java.lang=ALL-UNNAMED  -XX:+TieredCompilation -jar /app/application.jar
     ```
 4. Replace `YOUR-APPLICATION` in the above two file with the name of your `jar` file.
 5. Build the Docker image
@@ -105,5 +105,5 @@ To scan your own Java application, you need to:
     - Run the tracer :
         ```
         export APP=app
-        docker exec -it $APP /bin/bash -c "wget https://arthas.aliyun.com/arthas-boot.jar && java -jar arthas-boot.jar --attach-only --select YOUR-APPLICATION.jar" &&  docker run -it --rm -e TRACE_TIME=2 -v  /sys/kernel/debug:/sys/kernel/debug:rw -v /lib/modules/$(uname -r):/lib/modules/$(uname -r) -v /usr/src:/usr/src --privileged --pid container:$APP ayoubensalem/arvos-poc $(docker exec -ti $APP pidof java)
+        docker exec -it $APP /bin/bash -c "wget https://arthas.aliyun.com/arthas-boot.jar && /jdk/bin/java -jar arthas-boot.jar --attach-only --select application.jar" &&  docker run -it --rm --net host -e TRACE_TIME=2 -v  /sys/kernel/debug:/sys/kernel/debug:rw -v /lib/modules/$(uname -r):/lib/modules/$(uname -r) -v /usr/src:/usr/src --privileged --pid container:$APP ayoubensalem/arvos-poc $(docker exec -ti $APP pidof java)
         ``` 
