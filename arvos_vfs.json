@@ -65,10 +65,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 10,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.672930"
+        "updated_at": "2022-04-19 04:49:51.312832",
+        "package_name": "com.thoughtworks.xstream:xstream",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "1.4.18",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "1.4.18",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2021-39141",
@@ -136,10 +150,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 10,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.673151"
+        "updated_at": "2022-04-19 04:49:51.413105",
+        "package_name": "com.thoughtworks.xstream:xstream",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "1.4.18",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "1.4.18",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2021-39139",
@@ -207,10 +235,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 10,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.673355"
+        "updated_at": "2022-04-19 04:49:51.510087",
+        "package_name": "com.thoughtworks.xstream:xstream",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "1.4.18",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "1.4.18",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2021-33605",
@@ -230,10 +272,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 50,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.673499"
+        "updated_at": "2022-04-19 04:49:51.601365",
+        "package_name": "com.vaadin:vaadin-checkbox-flow",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "14.5.0",
+            "lt": "14.6.7",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "14.5.0",
+            "lt": "14.6.7",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2021-44228",
@@ -259,10 +315,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 33,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.673571"
+        "updated_at": "2022-04-19 04:49:51.690144",
+        "package_name": "org.apache.logging.log4j:log4j-core",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "2.13.0",
+            "lt": "2.15.0",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "2.13.0",
+            "lt": "2.15.0",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2021-23463",
@@ -282,10 +352,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 50,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.673643"
+        "updated_at": "2022-04-19 04:49:51.806269",
+        "package_name": "com.h2database:h2",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "2.0.202",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "2.0.202",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2020-14061",
@@ -299,10 +383,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 100,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.673694"
+        "updated_at": "2022-04-19 04:49:51.890529",
+        "package_name": "com.jwebmp.jre11.jackson.core:jackson-databind",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "2.9.0",
+            "lt": "2.9.10.5",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "~",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2020-14062",
@@ -316,10 +414,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 100,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.673734"
+        "updated_at": "2022-04-19 04:49:51.968180",
+        "package_name": "com.jwebmp.jre11.jackson.core:jackson-databind",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "2.9.0",
+            "lt": "2.9.10.5",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "~",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2020-14060",
@@ -333,10 +445,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 100,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.673773"
+        "updated_at": "2022-04-19 04:49:52.049046",
+        "package_name": "com.jwebmp.jre11.jackson.core:jackson-databind",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "2.9.0",
+            "lt": "2.9.10.5",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "~",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2020-14195",
@@ -350,10 +476,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 100,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.673811"
+        "updated_at": "2022-04-19 04:49:52.121599",
+        "package_name": "com.jwebmp.jre11.jackson.core:jackson-databind",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "2.9.0",
+            "lt": "2.9.10.5",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "~",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2020-10969",
@@ -367,10 +507,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 100,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.673851"
+        "updated_at": "2022-04-19 04:49:52.205461",
+        "package_name": "com.jwebmp.jre11.jackson.core:jackson-databind",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "2.8.0",
+            "lt": "2.8.11.6",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "~",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2020-9546",
@@ -384,10 +538,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 100,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.673888"
+        "updated_at": "2022-04-19 04:49:52.275482",
+        "package_name": "com.jwebmp.jre11.jackson.core:jackson-databind",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "2.7.0",
+            "lt": "2.7.9.7",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "~",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2021-31403",
@@ -419,10 +587,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 25,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.673954"
+        "updated_at": "2022-04-19 04:49:52.438082",
+        "package_name": "com.vaadin:vaadin-client",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "8.0.0",
+            "lt": "8.12.3",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "8.0.0",
+            "lt": "8.12.3",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2020-36320",
@@ -448,10 +630,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 33,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.674037"
+        "updated_at": "2022-04-19 04:49:52.605010",
+        "package_name": "com.vaadin:vaadin-client",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "7.0.0",
+            "lt": "7.7.22",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "7.0.0",
+            "lt": "~",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2019-25028",
@@ -465,10 +661,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 100,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.674093"
+        "updated_at": "2022-04-19 04:49:52.790868",
+        "package_name": "com.vaadin:vaadin-client",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "8.0.0",
+            "lt": "8.8.5",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "8.0.0",
+            "lt": "8.8.5",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2020-36282",
@@ -506,10 +716,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 20,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.674162"
+        "updated_at": "2022-04-19 04:49:52.868109",
+        "package_name": "com.rabbitmq.jms:rabbitmq-jms",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "2.0.0",
+            "lt": "2.2.0",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "2.0.0",
+            "lt": "2.2.0",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2021-21341",
@@ -559,10 +783,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 14,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.674284"
+        "updated_at": "2022-04-19 04:49:52.959862",
+        "package_name": "com.thoughtworks.xstream:xstream",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "1.4.16",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "1.4.16",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2021-21342",
@@ -612,10 +850,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 14,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.674425"
+        "updated_at": "2022-04-19 04:49:53.037585",
+        "package_name": "com.thoughtworks.xstream:xstream",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "1.4.16",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "1.4.16",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2021-21343",
@@ -665,10 +917,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 14,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.674567"
+        "updated_at": "2022-04-19 04:49:53.133495",
+        "package_name": "com.thoughtworks.xstream:xstream",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "1.4.16",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "1.4.16",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2021-21344",
@@ -718,10 +984,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 14,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.674707"
+        "updated_at": "2022-04-19 04:49:53.221935",
+        "package_name": "com.thoughtworks.xstream:xstream",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "1.4.16",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "1.4.16",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2021-21345",
@@ -771,10 +1051,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 14,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.674845"
+        "updated_at": "2022-04-19 04:49:53.305789",
+        "package_name": "com.thoughtworks.xstream:xstream",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "1.4.16",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "1.4.16",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2021-21346",
@@ -824,140 +1118,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 14,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.674983"
-    },
-    {
-        "vulnerability": "CVE-2021-21250",
-        "repository": "theonedev/onedev",
-        "symbols": [
-            {
-                "class_name": "io.onedev.server.web.editable.project.choice.ProjectSingleChoiceEditor",
-                "method_name": "onInitialize",
-                "parameters": "()",
-                "footprint": "io.onedev.server.web.editable.project.choice.ProjectSingleChoiceEditor.onInitialize()"
-            },
-            {
-                "class_name": "io.onedev.server.web.editable.project.choice.ProjectMultiChoiceEditor",
-                "method_name": "onInitialize",
-                "parameters": "()",
-                "footprint": "io.onedev.server.web.editable.project.choice.ProjectMultiChoiceEditor.onInitialize()"
-            },
-            {
-                "class_name": "io.onedev.server.web.editable.userchoice.UserMultiChoiceEditor",
-                "method_name": "onInitialize",
-                "parameters": "()",
-                "footprint": "io.onedev.server.web.editable.userchoice.UserMultiChoiceEditor.onInitialize()"
-            },
-            {
-                "class_name": "io.onedev.server.web.editable.userchoice.UserSingleChoiceEditor",
-                "method_name": "onInitialize",
-                "parameters": "()",
-                "footprint": "io.onedev.server.web.editable.userchoice.UserSingleChoiceEditor.onInitialize()"
-            },
-            {
-                "class_name": "io.onedev.server.web.component.project.choice.ProjectChoiceProvider",
-                "method_name": "<init>",
-                "parameters": "(List)",
-                "footprint": "io.onedev.server.web.component.project.choice.ProjectChoiceProvider.<init>(List)"
-            },
-            {
-                "class_name": "io.onedev.server.web.component.project.choice.ProjectChoiceProvider",
-                "method_name": "query",
-                "parameters": "(String, int, Response)",
-                "footprint": "io.onedev.server.web.component.project.choice.ProjectChoiceProvider.query(String, int, Response)"
-            },
-            {
-                "class_name": "io.onedev.server.web.component.pullrequest.choice.PullRequestChoiceProvider",
-                "method_name": "query",
-                "parameters": "(String, int, Response)",
-                "footprint": "io.onedev.server.web.component.pullrequest.choice.PullRequestChoiceProvider.query(String, int, Response)"
-            },
-            {
-                "class_name": "io.onedev.server.web.component.build.choice.BuildChoiceProvider",
-                "method_name": "query",
-                "parameters": "(String, int, Response)",
-                "footprint": "io.onedev.server.web.component.build.choice.BuildChoiceProvider.query(String, int, Response)"
-            },
-            {
-                "class_name": "io.onedev.server.web.component.issue.choice.IssueChoiceProvider",
-                "method_name": "query",
-                "parameters": "(String, int, Response)",
-                "footprint": "io.onedev.server.web.component.issue.choice.IssueChoiceProvider.query(String, int, Response)"
-            }
-        ],
-        "language": "java",
-        "model_version": "v0.1.0",
-        "confidence": 11,
-        "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.675134"
-    },
-    {
-        "vulnerability": "CVE-2021-21251",
-        "repository": "theonedev/onedev",
-        "symbols": [
-            {
-                "class_name": "io.onedev.server.web.editable.project.choice.ProjectSingleChoiceEditor",
-                "method_name": "onInitialize",
-                "parameters": "()",
-                "footprint": "io.onedev.server.web.editable.project.choice.ProjectSingleChoiceEditor.onInitialize()"
-            },
-            {
-                "class_name": "io.onedev.server.web.editable.project.choice.ProjectMultiChoiceEditor",
-                "method_name": "onInitialize",
-                "parameters": "()",
-                "footprint": "io.onedev.server.web.editable.project.choice.ProjectMultiChoiceEditor.onInitialize()"
-            },
-            {
-                "class_name": "io.onedev.server.web.editable.userchoice.UserMultiChoiceEditor",
-                "method_name": "onInitialize",
-                "parameters": "()",
-                "footprint": "io.onedev.server.web.editable.userchoice.UserMultiChoiceEditor.onInitialize()"
-            },
-            {
-                "class_name": "io.onedev.server.web.editable.userchoice.UserSingleChoiceEditor",
-                "method_name": "onInitialize",
-                "parameters": "()",
-                "footprint": "io.onedev.server.web.editable.userchoice.UserSingleChoiceEditor.onInitialize()"
-            },
-            {
-                "class_name": "io.onedev.server.web.component.project.choice.ProjectChoiceProvider",
-                "method_name": "<init>",
-                "parameters": "(List)",
-                "footprint": "io.onedev.server.web.component.project.choice.ProjectChoiceProvider.<init>(List)"
-            },
-            {
-                "class_name": "io.onedev.server.web.component.project.choice.ProjectChoiceProvider",
-                "method_name": "query",
-                "parameters": "(String, int, Response)",
-                "footprint": "io.onedev.server.web.component.project.choice.ProjectChoiceProvider.query(String, int, Response)"
-            },
-            {
-                "class_name": "io.onedev.server.web.component.pullrequest.choice.PullRequestChoiceProvider",
-                "method_name": "query",
-                "parameters": "(String, int, Response)",
-                "footprint": "io.onedev.server.web.component.pullrequest.choice.PullRequestChoiceProvider.query(String, int, Response)"
-            },
-            {
-                "class_name": "io.onedev.server.web.component.build.choice.BuildChoiceProvider",
-                "method_name": "query",
-                "parameters": "(String, int, Response)",
-                "footprint": "io.onedev.server.web.component.build.choice.BuildChoiceProvider.query(String, int, Response)"
-            },
-            {
-                "class_name": "io.onedev.server.web.component.issue.choice.IssueChoiceProvider",
-                "method_name": "query",
-                "parameters": "(String, int, Response)",
-                "footprint": "io.onedev.server.web.component.issue.choice.IssueChoiceProvider.query(String, int, Response)"
-            }
-        ],
-        "language": "java",
-        "model_version": "v0.1.0",
-        "confidence": 11,
-        "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.675313"
+        "updated_at": "2022-04-19 04:49:53.396574",
+        "package_name": "com.thoughtworks.xstream:xstream",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "1.4.16",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "1.4.16",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2021-21307",
@@ -971,10 +1149,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 100,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.675416"
+        "updated_at": "2022-04-19 04:49:53.552083",
+        "package_name": "org.lucee:lucee",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "5.3.7.00",
+            "lt": "5.3.7.47",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "5.3.7.47",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2020-28491",
@@ -1018,10 +1210,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 16,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.675488"
+        "updated_at": "2022-04-19 04:49:53.654278",
+        "package_name": "com.fasterxml.jackson.dataformat:jackson-dataformat-cbor",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "2.11.4",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "2.11.4",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2020-15250",
@@ -1065,90 +1271,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 16,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.675603"
-    },
-    {
-        "vulnerability": "CVE-2020-15252",
-        "repository": "xwiki/xwiki-platform",
-        "symbols": [
-            {
-                "class_name": "org.xwiki.search.solr.internal.EmbeddedSolr",
-                "method_name": "createSearchCore",
-                "parameters": "()",
-                "footprint": "org.xwiki.search.solr.internal.EmbeddedSolr.createSearchCore()"
-            },
-            {
-                "class_name": "org.xwiki.mentions.internal.DefaultMentionsConfiguration",
-                "method_name": "getMentionsColor",
-                "parameters": "()",
-                "footprint": "org.xwiki.mentions.internal.DefaultMentionsConfiguration.getMentionsColor()"
-            },
-            {
-                "class_name": "org.xwiki.mentions.internal.DefaultMentionsConfiguration",
-                "method_name": "getSelfMentionsColor",
-                "parameters": "()",
-                "footprint": "org.xwiki.mentions.internal.DefaultMentionsConfiguration.getSelfMentionsColor()"
-            },
-            {
-                "class_name": "com.xpn.xwiki.web.SaveAction",
-                "method_name": "save",
-                "parameters": "(XWikiContext)",
-                "footprint": "com.xpn.xwiki.web.SaveAction.save(XWikiContext)"
-            },
-            {
-                "class_name": "com.xpn.xwiki.web.CreateAction",
-                "method_name": "doCreate",
-                "parameters": "(XWikiContext, XWikiDocument, boolean, BaseObject)",
-                "footprint": "com.xpn.xwiki.web.CreateAction.doCreate(XWikiContext, XWikiDocument, boolean, BaseObject)"
-            },
-            {
-                "class_name": "com.xpn.xwiki.web.CreateAction",
-                "method_name": "getEditMode",
-                "parameters": "(String, DocumentReferenceResolver, XWikiContext)",
-                "footprint": "com.xpn.xwiki.web.CreateAction.getEditMode(String, DocumentReferenceResolver, XWikiContext)"
-            }
-        ],
-        "language": "java",
-        "model_version": "v0.1.0",
-        "confidence": 16,
-        "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.675789"
-    },
-    {
-        "vulnerability": "CVE-2020-8919",
-        "repository": "GerritCodeReview/gerrit",
-        "symbols": [],
-        "language": "java",
-        "model_version": "v0.1.0",
-        "confidence": 0,
-        "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.675857"
-    },
-    {
-        "vulnerability": "CVE-2020-8920",
-        "repository": "GerritCodeReview/gerrit",
-        "symbols": [
-            {
-                "class_name": "com.google.gerrit.server.project.ProjectControl",
-                "method_name": "<init>",
-                "parameters": "(Set, Set, ProjectCache, PermissionCollection.Factory, ChangeNotes.Factory, ChangeControl.Factory, TagCache, Provider, SearchingChangeCacheImpl, String, CurrentUser, ProjectState, Metrics)",
-                "footprint": "com.google.gerrit.server.project.ProjectControl.<init>(Set, Set, ProjectCache, PermissionCollection.Factory, ChangeNotes.Factory, ChangeControl.Factory, TagCache, Provider, SearchingChangeCacheImpl, String, CurrentUser, ProjectState, Metrics)"
-            },
-            {
-                "class_name": "com.google.gerrit.server.project.ProjectControl",
-                "method_name": "allRefsAreVisible",
-                "parameters": "(Set)",
-                "footprint": "com.google.gerrit.server.project.ProjectControl.allRefsAreVisible(Set)"
-            }
-        ],
-        "language": "java",
-        "model_version": "v0.1.0",
-        "confidence": 50,
-        "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.675898"
+        "updated_at": "2022-04-19 04:49:53.777320",
+        "package_name": "junit:junit",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "4.7",
+            "lt": "4.13.1",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "4.7",
+            "lt": "4.13.1",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2020-26258",
@@ -1180,10 +1320,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 25,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.675963"
+        "updated_at": "2022-04-19 04:49:53.977408",
+        "package_name": "com.thoughtworks.xstream:xstream",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "1.4.15",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "1.4.15",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2020-26259",
@@ -1215,10 +1369,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 25,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.676081"
+        "updated_at": "2022-04-19 04:49:54.068404",
+        "package_name": "com.thoughtworks.xstream:xstream",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "1.4.15",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "1.4.15",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2019-10797",
@@ -1244,10 +1412,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 33,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.676272"
+        "updated_at": "2022-04-19 04:49:54.187633",
+        "package_name": "org.wso2.transport.http:org.wso2.transport.http.netty",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "6.3.1",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "6.3.1",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2018-1002200",
@@ -1291,27 +1473,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 16,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.676369"
-    },
-    {
-        "vulnerability": "CVE-2018-20222",
-        "repository": "airsonic/airsonic",
-        "symbols": [
-            {
-                "class_name": "org.airsonic.player.service.SecurityService",
-                "method_name": "loadUserByUsername",
-                "parameters": "(String, boolean)",
-                "footprint": "org.airsonic.player.service.SecurityService.loadUserByUsername(String, boolean)"
-            }
-        ],
-        "language": "java",
-        "model_version": "v0.1.0",
-        "confidence": 100,
-        "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.676447"
+        "updated_at": "2022-04-19 04:49:54.262220",
+        "package_name": "org.codehaus.plexus:plexus-archiver",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "3.6.0",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "3.6.0",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2018-5968",
@@ -1361,10 +1540,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 14,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.676529"
+        "updated_at": "2022-04-19 04:49:54.392470",
+        "package_name": "com.jwebmp.jre11.jackson.core:jackson-databind",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "2.7.0",
+            "lt": "2.7.9.2",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "~",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2016-10027",
@@ -1396,27 +1589,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 25,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.676685"
-    },
-    {
-        "vulnerability": "CVE-2020-15124",
-        "repository": "intranda/goobi-viewer-core",
-        "symbols": [
-            {
-                "class_name": "io.goobi.viewer.controller.DataFileTools",
-                "method_name": "getDataFilePath",
-                "parameters": "(String, String, String, String)",
-                "footprint": "io.goobi.viewer.controller.DataFileTools.getDataFilePath(String, String, String, String)"
-            }
-        ],
-        "language": "java",
-        "model_version": "v0.1.0",
-        "confidence": 100,
-        "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.676790"
+        "updated_at": "2022-04-19 04:49:54.761215",
+        "package_name": "org.igniterealtime.jxmpp:jxmpp-core",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "4.1.9",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "~",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2020-24616",
@@ -1430,10 +1620,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 100,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.676826"
+        "updated_at": "2022-04-19 04:49:54.873519",
+        "package_name": "com.jwebmp.jre11.jackson.core:jackson-databind",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "2.9.0",
+            "lt": "2.9.10.6",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "~",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2017-15095",
@@ -1513,10 +1717,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 8,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.676991"
+        "updated_at": "2022-04-19 04:49:54.958368",
+        "package_name": "com.jwebmp.jre11.jackson.core:jackson-databind",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "2.8.0",
+            "lt": "2.8.10",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "~",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2018-12541",
@@ -1620,10 +1838,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 6,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.677831"
+        "updated_at": "2022-04-19 04:49:55.069001",
+        "package_name": "io.vertx:vertx-core",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "3.0.0",
+            "lt": "3.9.7",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "3.0.0",
+            "lt": "3.9.7",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2017-14949",
@@ -1637,10 +1869,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 100,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.677997"
+        "updated_at": "2022-04-19 04:49:55.137155",
+        "package_name": "hu.blackbelt.bundles.restlet:org.restlet",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "2.3.12",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "2.3.12_1",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2018-12418",
@@ -1654,10 +1900,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 100,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.678034"
+        "updated_at": "2022-04-19 04:49:55.204065",
+        "package_name": "com.github.junrar:junrar",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "1.0.1",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "1.0.1",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2018-7489",
@@ -1677,10 +1937,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 50,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.678095"
+        "updated_at": "2022-04-19 04:49:55.273465",
+        "package_name": "com.jwebmp.jre11.jackson.core:jackson-databind",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "2.7.9.3",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "~",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2017-7525",
@@ -1700,57 +1974,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 50,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.678149"
-    },
-    {
-        "vulnerability": "CVE-2020-12760",
-        "repository": "OpenNMS/opennms",
-        "symbols": [
-            {
-                "class_name": "org.opennms.core.ipc.sink.common.AbstractMessageConsumerManager",
-                "method_name": "<init>",
-                "parameters": "()",
-                "footprint": "org.opennms.core.ipc.sink.common.AbstractMessageConsumerManager.<init>()"
-            },
-            {
-                "class_name": "org.opennms.core.ipc.sink.common.AbstractMessageConsumerManager",
-                "method_name": "registerConsumer",
-                "parameters": "(MessageConsumer)",
-                "footprint": "org.opennms.core.ipc.sink.common.AbstractMessageConsumerManager.registerConsumer(MessageConsumer)"
-            },
-            {
-                "class_name": "org.opennms.core.ipc.sink.common.AbstractMessageConsumerManager",
-                "method_name": "getNumConsumerThreads",
-                "parameters": "(SinkModule)",
-                "footprint": "org.opennms.core.ipc.sink.common.AbstractMessageConsumerManager.getNumConsumerThreads(SinkModule)"
-            },
-            {
-                "class_name": "org.opennms.netmgt.poller.PollerEventProcessor",
-                "method_name": "nodeGainedServiceHandler",
-                "parameters": "(Event)",
-                "footprint": "org.opennms.netmgt.poller.PollerEventProcessor.nodeGainedServiceHandler(Event)"
-            },
-            {
-                "class_name": "org.opennms.netmgt.poller.PollerEventProcessor",
-                "method_name": "serviceReschedule",
-                "parameters": "(Long, String, String, Event, boolean)",
-                "footprint": "org.opennms.netmgt.poller.PollerEventProcessor.serviceReschedule(Long, String, String, Event, boolean)"
-            },
-            {
-                "class_name": "org.opennms.netmgt.poller.Poller",
-                "method_name": "scheduleService",
-                "parameters": "(int, String, String, String, String)",
-                "footprint": "org.opennms.netmgt.poller.Poller.scheduleService(int, String, String, String, String)"
-            }
-        ],
-        "language": "java",
-        "model_version": "v0.1.0",
-        "confidence": 16,
-        "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.678248"
+        "updated_at": "2022-04-19 04:49:55.351355",
+        "package_name": "com.jwebmp.jre11.jackson.core:jackson-databind",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "2.6.0",
+            "lt": "2.6.7.1",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "~",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2020-13973",
@@ -1770,10 +2011,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 50,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.678332"
+        "updated_at": "2022-04-19 04:49:55.470677",
+        "package_name": "com.mikesamuel:json-sanitizer",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "1.2.1",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "1.2.1",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2018-14721",
@@ -1787,10 +2042,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 100,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.678375"
+        "updated_at": "2022-04-19 04:49:55.555641",
+        "package_name": "com.jwebmp.jre11.jackson.core:jackson-databind",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "2.6.0",
+            "lt": "2.6.7.2",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "~",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2018-1000873",
@@ -1834,10 +2103,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 16,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.678447"
+        "updated_at": "2022-04-19 04:49:55.640720",
+        "package_name": "com.fasterxml.jackson.datatype:jackson-datatype-jsr310",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "2.9.8",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "2.9.8",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2018-1000822",
@@ -1893,10 +2176,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 12,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.678575"
+        "updated_at": "2022-04-19 04:49:55.749612",
+        "package_name": "org.codelibs.fess:fess",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "12.2.3",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "12.2.3",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2018-9159",
@@ -1982,10 +2279,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 7,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.678757"
+        "updated_at": "2022-04-19 04:49:55.826801",
+        "package_name": "com.sparkjava:spark-core",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "2.7.2",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "2.7.2",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2019-14892",
@@ -1999,10 +2310,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 100,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.678891"
+        "updated_at": "2022-04-19 04:49:55.897939",
+        "package_name": "com.jwebmp.jre11.jackson.core:jackson-databind",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "2.8.0",
+            "lt": "2.8.11.5",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "~",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2019-14893",
@@ -2016,10 +2341,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 100,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.678925"
+        "updated_at": "2022-04-19 04:49:55.966829",
+        "package_name": "com.jwebmp.jre11.jackson.core:jackson-databind",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "2.8.0",
+            "lt": "2.8.11.5",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "~",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2020-11002",
@@ -2087,10 +2426,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 10,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.679025"
+        "updated_at": "2022-04-19 04:49:56.053474",
+        "package_name": "io.dropwizard:dropwizard-validation",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "1.3.21",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "1.3.21",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2020-5245",
@@ -2104,10 +2457,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 100,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.679153"
+        "updated_at": "2022-04-19 04:49:56.142864",
+        "package_name": "io.dropwizard:dropwizard-validation",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "1.3.19",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "1.3.19",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2020-11612",
@@ -2187,10 +2554,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 8,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.679305"
+        "updated_at": "2022-04-19 04:49:56.219206",
+        "package_name": "io.netty:netty-handler",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "4.1",
+            "lt": "4.1.46",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "4.1.0.CR7",
+            "lt": "4.1.46.Final",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2019-16869",
@@ -2570,10 +2951,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 1,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.679963"
+        "updated_at": "2022-04-19 04:49:56.306368",
+        "package_name": "io.netty:netty-all",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "4.1.42",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "4.1.42.Final",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2019-20444",
@@ -2587,10 +2982,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 100,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.680746"
+        "updated_at": "2022-04-19 04:49:56.381875",
+        "package_name": "io.netty:netty-handler",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "4.1.44",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "4.1.44.Final",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2019-20445",
@@ -2604,10 +3013,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 100,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.680785"
+        "updated_at": "2022-04-19 04:49:56.465934",
+        "package_name": "io.netty:netty-handler",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "4.1.44",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "4.1.44.Final",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2021-21290",
@@ -3197,10 +3620,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 1,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.681594"
+        "updated_at": "2022-04-19 04:49:56.588811",
+        "package_name": "io.netty:netty-codec-http",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "4.1.59",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "4.1.59.Final",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2021-21295",
@@ -4192,10 +4629,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 0,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.683834"
+        "updated_at": "2022-04-19 04:49:56.675865",
+        "package_name": "io.netty:netty-codec-http2",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "4.1.60",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "4.1.60.Final",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2021-21409",
@@ -4653,10 +5104,24 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 1,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.685920"
+        "updated_at": "2022-04-19 04:49:56.755550",
+        "package_name": "io.netty:netty-codec-http2",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "4.1.61",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "4.1.61.Final",
+            "lte": "~"
+        }
     },
     {
         "vulnerability": "CVE-2019-14540",
@@ -4670,9 +5135,23 @@
             }
         ],
         "language": "java",
-        "model_version": "v0.1.0",
+        "model_version": "v0.1.1",
         "confidence": 100,
         "spread": -1,
-        "updated_at": "2021-12-21 13:36:34.686583"
+        "updated_at": "2022-04-19 04:49:56.828533",
+        "package_name": "com.jwebmp.jre11.jackson.core:jackson-databind",
+        "package_manager": "maven",
+        "cpe_version_range": {
+            "gt": "~",
+            "gte": "2.8.0",
+            "lt": "2.8.11.5",
+            "lte": "~"
+        },
+        "package_version_range": {
+            "gt": "~",
+            "gte": "~",
+            "lt": "~",
+            "lte": "~"
+        }
     }
 ]

@@ -6,8 +6,10 @@ from bcc import BPF, USDT
 import json
 import os
 from parsexml import parse_xml
+from packaging.version import parse
+from packaging.specifiers import SpecifierSet
 import arthas
-import requests 
+import requests
 import ray
 
 TRACE_TIME = int(os.getenv('TRACE_TIME', 1)) * 6
@@ -16,6 +18,33 @@ PERIOD = 10
 ENDPOINT = "http://localhost:8563/api"
 STACKS_DIR = "/stacks"
 ray.init()
+
+def filter_relevant_vulnerabilities(db, dependencies):
+    operators = {
+        "gt": ">",
+        "gte": ">=",
+        "lt": "<",
+        "lte": "<="
+    }
+    
+    indices_to_be_deleted = []
+    for dep in dependencies:
+        if dep['version']:
+            package_name = dep['groupId'] + ":" + dep['artifactId']
+            package_version = parse(dep['version'])
+            for index, vuln in enumerate(db):
+                if package_name == vuln['package_name']:
+                    if len(set(vuln['package_version_range'].values())) == 1 and set(vuln['package_version_range'].values().pop() == "~"):
+                        version_range = list(filter(lambda e: e[1] != '~', list(vuln['cpe_version_range'].items())))
+                    else :
+                        version_range = list(filter(lambda e: e[1] != '~', list(vuln['package_version_range'].items())))
+                    specifier_set = ",".join(list(map(lambda e: operators[e[0]] + e[1],version_range)))
+                    if not package_version in SpecifierSet(specifier_set):
+                        print("%s not  %s" % (package_version, specifier_set))
+                        indices_to_be_deleted.append(index)
+    for i in sorted(indices_to_be_deleted, reverse=True):
+        del db[i]
+    return db
 
 @ray.remote
 def pull_results(art):
@@ -135,19 +164,22 @@ f = 'arvos_vfs_java.json'
 with open(f) as json_file:
     data = json_file.read()
 
-vuln_obj = json.loads(data)
+if not args.pom:
+    vuln_obj = json.loads(data)
+else :
+    vuln_obj = filter_relevant_vulnerabilities(json.loads(data), dep_list)
+
 
 # keep track of invoked vulnerable symbols
 vuln_count = 0
 
 print(f"{bcolors.OKGREEN}\nTracing Java calls in process %d and scanning for vulnerable symbols ... Ctrl-C to quit.{bcolors.ENDC}" % (args.pid))
 
-sleep(1)
-os.system('clear')
-
 # Loop until exit
 seen  = []
 parallel_functions  = []
+opened_sessions = []
+
 while TRACE_TIME != 0:
     TRACE_TIME -= 1 
     sleep(PERIOD)
@@ -173,10 +205,11 @@ while TRACE_TIME != 0:
                         parallel_functions.append(ref)
 
 
-ray.get(parallel_functions)
+print("Closing all arthas sessions..")
+for session in opened_sessions:
+    arthas.Arthas.close_session(session)
 
 print("Generating Report ...")
-print(f"Found %s vulnerable symbols that were invoked" % vuln_count)
 
 for stackfile in os.listdir(STACKS_DIR):
   f = os.path.join(STACKS_DIR, stackfile)
@@ -195,7 +228,7 @@ for stackfile in os.listdir(STACKS_DIR):
         print(f"\t{bcolors.FAIL}Spread:{bcolors.ENDC} {item['spread']}")
         print(f"\t{bcolors.FAIL}Package name:{bcolors.ENDC} {item['package_name']}")
         print(f"\t{bcolors.FAIL}Package manager:{bcolors.ENDC} {item['package_manager']}")
-        print(f"\t{bcolors.FAIL}Version range:{bcolors.ENDC} {item['version_range']}")
+        print(f"\t{bcolors.FAIL}Version range:{bcolors.ENDC} {item['package_version_range']}")
         print(f"\t{bcolors.FAIL}Stack trace:{bcolors.ENDC}")
         print("\t", open(f).read())
         print("------------------------------------------------------------------------------")
