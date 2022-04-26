@@ -71,39 +71,33 @@ The exact CLI and output (e.g., human-readable, colored terminal, CSV, JSON) are
 To scan your own Java application, you need to:
 
 1. Build a `jar` file for your application. Your application should be able to run in JVM 17.
-2. Create a Docker image for your application based on the `moule3053/jdk-docker-jstack` Docker image. Create a `Dockerfile` that looks like the below in the same directory where your `jar` file resides.
+2. Create a Docker image for your application based on the `ayoubensalem/jdk-docker-jstack` Docker image. Create a `Dockerfile` that looks like the below in the same directory where your `jar` file resides.
     ```
-    FROM moule3053/jdk-docker-jstack
-    RUN mkdir /app
-    COPY YOUR-APPLICATION.jar /app/application.jar
-    COPY entrypoint.sh /entrypoint.sh
-    RUN chmod +x /entrypoint.sh
-    ENTRYPOINT ["/entrypoint.sh"]
+    FROM ayoubensalem/jdk-docker-jstack
+    COPY YOUR-APPLICATION.jar ./application.jar
     ```
-3. You should also have a file called `entrypoint.sh` in the same directory as `Dockerfile`. The contents of `entrypoint.sh` should look like
-    ```
-    #!/bin/bash
-
-    /jdk/bin/java -XX:+ExtendedDTraceProbes -XX:+PreserveFramePointer -XX:+StartAttachListener -XX:+UnlockDiagnosticVMOptions -XX:+DebugNonSafepoints -XX:-OmitStackTraceInFastThrow -XX:+ShowHiddenFrames --add-opens java.base/java.lang=ALL-UNNAMED  -XX:+TieredCompilation -jar /app/application.jar
-    ```
-4. Replace `YOUR-APPLICATION` in the above two file with the name of your `jar` file.
-5. Build the Docker image
+3. Replace `YOUR-APPLICATION` in the above two file with the name of your `jar` file.
+4. Build the Docker image
     ```
     docker build -t YOUR-DOCKER-REGISTRY/APPLICATION-IMAGE-NAME .
     ```
-6. In a first terminal, run your application using Docker.
+5. In a first terminal, run your application using Docker.
     ```
     docker run -d --name app --net host  YOUR-DOCKER-REGISTRY/APPLICATION-IMAGE-NAME
     ```
-7. Continuously call a few endppoints of your application.
-8. In a second terminal, run the following commands to generate stack traces and to run the tracer application `arvos-poc`.
+6. Continuously call a few endppoints of your application.
+7. In a second terminal, run the following commands to generate stack traces and to run the tracer application `arvos-poc`.
 
     - Make sure the debugfs is mounted : 
         ```
         sudo mount -t debugfs debugfs /sys/kernel/debug
         ```
-    - Run the tracer :
+    - Run arthas diagnosis tool :
         ```
         export APP=app
-        docker exec -it $APP /bin/bash -c "wget https://arthas.aliyun.com/arthas-boot.jar && /jdk/bin/java -jar arthas-boot.jar --attach-only --select application.jar" &&  docker run -it --rm --net host -e TRACE_TIME=2 -v  /sys/kernel/debug:/sys/kernel/debug:rw -v /lib/modules/$(uname -r):/lib/modules/$(uname -r) -v /usr/src:/usr/src --privileged --pid container:$APP ayoubensalem/arvos-poc $(docker exec -ti $APP pidof java)
+        docker exec -it $APP /bin/bash -c "/jdk/bin/java -jar arthas-boot.jar --attach-only --select application.jar"
         ``` 
+    - Run the tracer app : 
+        ```
+        docker run -it --rm --net host -e TRACE_TIME=2 -v /sys/kernel/debug:/sys/kernel/debug:rw -v /lib/modules/$(uname -r):/lib/modules/$(uname -r) -v /usr/src:/usr/src --privileged --pid container:$APP ayoubensalem/arvos-poc $(docker exec -ti $APP pidof java)
+        ```
