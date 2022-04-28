@@ -11,6 +11,7 @@ from packaging.specifiers import SpecifierSet
 import arthas
 import requests
 import ray
+from fpdf import FPDF
 
 # Tracing time in minutes
 TRACE_TIME = int(os.getenv('TRACE_TIME', 1)) * 6
@@ -97,6 +98,7 @@ parser.add_argument("pid", type=int, help="process id to attach to")
 parser.add_argument("-v", "--verbose", action="store_true",
     help="verbose mode: print the BPF program (for debugging purposes)")
 parser.add_argument("--pom", "--only-versions-from-pom", type=str)
+parser.add_argument("--save-report", help="Save report as pdf", action="store_true")
 
 args = parser.parse_args()
 
@@ -212,6 +214,9 @@ for session in opened_sessions:
 
 print("Generating Report ...")
 
+if args['save_report']:
+    pdf = FPDF()
+
 for stackfile in os.listdir(STACKS_DIR):
   f = os.path.join(STACKS_DIR, stackfile)
   symbol = stackfile[:-6]
@@ -233,5 +238,52 @@ for stackfile in os.listdir(STACKS_DIR):
         print(f"\t{bcolors.FAIL}Stack trace:{bcolors.ENDC}")
         print("\t", open(f).read())
         print("------------------------------------------------------------------------------")
+        if args['save_report']:
+            pdf.add_page()
+            pdf.set_font("Arial", size = 8)    
+
+            pdf.set_text_color(255,0,0)
+            pdf.cell(180,5, txt = "Vulnerability:", ln=1, border=1)
+            pdf.set_text_color(0,0,0)
+            pdf.cell(180,5, txt = item['vulnerability'], ln=1)
+
+            pdf.set_text_color(255,0,0)
+            pdf.cell(180,5, txt = "Repository:", ln=1, border=1)
+            pdf.set_text_color(0,0,0)
+            pdf.cell(180,5, txt = item['repository'], ln=1)
+
+            pdf.set_text_color(255,0,0)
+            pdf.cell(180,5, txt = "Invoked Class:", ln=1, border=1)
+            pdf.set_text_color(0,0,0)
+            pdf.cell(180,5, txt = sym['class_name'], ln=1)
+
+            pdf.set_text_color(255,0,0)
+            pdf.cell(180,5, txt = "Invoked Method:", ln=1, border=1)
+            pdf.set_text_color(0,0,0)
+            pdf.cell(180,5, txt = sym['method_name'], ln=1)
+
+            pdf.set_text_color(255,0,0)
+            pdf.cell(180,5, txt = "Package name:", ln=1, border=1)
+            pdf.set_text_color(0,0,0)
+            pdf.cell(180,5, txt = item['package_name'], ln=1)
+
+            pdf.set_text_color(255,0,0)
+            pdf.cell(180,5, txt = "Package manager:", ln=1, border=1)
+            pdf.set_text_color(0,0,0)
+            pdf.cell(180,5, txt = item['package_manager'], ln=1)
+
+            # pdf.set_text_color(255,0,0)
+            # pdf.cell(180,10, txt = "Version range:")
+            # pdf.set_text_color(0,0,0)
+            # pdf.cell(180,10, txt = item['package_version_range'])
+
+            pdf.set_text_color(255,0,0)
+            pdf.cell(180,5, txt = "Stack Trace:", border=1,ln=1)
+            pdf.set_text_color(0,0,0)
+            pdf.set_font("Arial", size = 7)    
+            pdf.multi_cell(180, 5, txt = " ".join(open(f).readlines()[:35]), border=1)
+
+if args['save_report']:
+    pdf.output("/stacks/arvos-report.pdf")   
 
 
