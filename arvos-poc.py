@@ -100,13 +100,12 @@ parser.add_argument("-v", "--verbose", action="store_true",
 parser.add_argument("--pom", "--only-versions-from-pom", type=str)
 parser.add_argument("--save-report", help="Save report as pdf", action="store_true")
 
-args = parser.parse_args()
-
+args = vars(parser.parse_args())
 # pom file parser
-if not args.pom:
+if not args['pom']:
     print(f"{bcolors.WARNING}pom.xml not provided. Version filtering cannot be performed. This will increase the number of false positives.\n{bcolors.ENDC}")
 else:
-    pom_file = args.pom
+    pom_file = args['pom']
     dep_list = parse_xml(pom_file)
 
 # BPF program
@@ -149,12 +148,12 @@ int trace_entry(struct pt_regs *ctx) {
 """
 
 # usdt
-usdt = USDT(pid=args.pid)
+usdt = USDT(pid=args['pid'])
 entry_probe = "method__entry"
 usdt.enable_probe_or_bail(entry_probe, "trace_entry")
 
-if args.verbose:
-    if args.verbose and usdt:
+if args['verbose']:
+    if args['verbose'] and usdt:
         print(usdt.get_text())
     print(program)
 
@@ -167,7 +166,7 @@ f = 'arvos_vfs_java.json'
 with open(f) as json_file:
     data = json_file.read()
 
-if not args.pom:
+if not args['pom']:
     vuln_obj = json.loads(data)
 else :
     vuln_obj = filter_relevant_vulnerabilities(json.loads(data), dep_list)
@@ -176,7 +175,7 @@ else :
 # keep track of invoked vulnerable symbols
 vuln_count = 0
 
-print(f"{bcolors.OKGREEN}\nTracing Java calls in process %d and scanning for vulnerable symbols ... Ctrl-C to quit.{bcolors.ENDC}" % (args.pid))
+print(f"{bcolors.OKGREEN}\nTracing Java calls in process %d and scanning for vulnerable symbols ... Ctrl-C to quit.{bcolors.ENDC}" % (args['pid']))
 
 # Loop until exit
 seen  = []
