@@ -213,8 +213,31 @@ for session in opened_sessions:
 
 print("Generating Report ...")
 
+report_description = """
+The following report lists the vulnerable classes and methods that we identified 
+while your application was running. 
+In each page, you will find the invoked vunlerable class & method, 
+the vulnerability, the package name and its Github repository as well as a 
+stacktrace that will help you identify in which part of your code application 
+you called the vulnerable symbol.
+"""
+
 if args['save_report']:
     pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font('Arial', 'B', 30)
+    w = pdf.get_string_width('Arvos Report') + 6
+    pdf.set_x((210 - w) / 2)
+    pdf.set_text_color(220, 50, 50)
+    pdf.cell(w, 30, 'Arvos Report', 0, 1, 'C')
+    pdf.ln(10)
+
+    pdf.set_font("Arial", size = 15)
+    pdf.set_text_color(0, 0, 0)
+
+    for x in report_description.split("\n"):
+        pdf.cell(200, 10, txt = x, ln = 1)
+
 
 for stackfile in os.listdir(STACKS_DIR):
   f = os.path.join(STACKS_DIR, stackfile)
@@ -247,9 +270,9 @@ for stackfile in os.listdir(STACKS_DIR):
             pdf.cell(180,5, txt = item['vulnerability'], ln=1)
 
             pdf.set_text_color(255,0,0)
-            pdf.cell(180,5, txt = "Repository:", ln=1, border=1)
+            pdf.cell(180,5, txt = "Github Repository:", ln=1, border=1)
             pdf.set_text_color(0,0,0)
-            pdf.cell(180,5, txt = item['repository'], ln=1)
+            pdf.cell(180,5, txt = "https://github.com/" + item['repository'], ln=1)
 
             pdf.set_text_color(255,0,0)
             pdf.cell(180,5, txt = "Invoked Class:", ln=1, border=1)
@@ -271,10 +294,10 @@ for stackfile in os.listdir(STACKS_DIR):
             pdf.set_text_color(0,0,0)
             pdf.cell(180,5, txt = item['package_manager'], ln=1)
 
-            # pdf.set_text_color(255,0,0)
-            # pdf.cell(180,10, txt = "Version range:")
-            # pdf.set_text_color(0,0,0)
-            # pdf.cell(180,10, txt = item['package_version_range'])
+            pdf.set_text_color(255,0,0)
+            pdf.cell(180,5, txt = "Version range:", ln=1, border=1)
+            pdf.set_text_color(0,0,0)
+            pdf.cell(180,5, txt = json.dumps(item['package_version_range']), ln=1)
 
             pdf.set_text_color(255,0,0)
             pdf.cell(180,5, txt = "Stack Trace:", border=1,ln=1)
