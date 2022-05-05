@@ -14,7 +14,7 @@ class Arthas(object):
   def join_session(self):
     r = requests.post(ENDPOINT, json={'action': 'join_session', 'sessionId': self.sessionId})
     if r.json()['state'] == "SUCCEEDED":
-      print("Session %s was joined" % self.sessionId)
+      # print("Session %s was joined" % self.sessionId)
       self.consumerId = r.json()['consumerId']
     else :
       raise RuntimeError(r.json()['message'])
@@ -22,21 +22,18 @@ class Arthas(object):
   def async_exec(self, command):
     self.command = command 
     r = requests.post(ENDPOINT, json={'action': 'async_exec', 'sessionId': self.sessionId, 'command': command})
-    if r.json()['state'] == "SCHEDULED":
-      print(f"Command : %s was scheduled" % command)
-    else :
+    if not r.json()['state'] == "SCHEDULED":
       raise RuntimeError(r.json()['message'])
 
   def interrupt_job(self):
     r = requests.post(ENDPOINT, json={'action': 'interrupt_job', 'sessionId': self.sessionId})
-    if r.json()['state'] == "SUCCEEDED":
-      print("Foreground job was interrupted")
-    else :
-      print(r.json()['message'])
 
   def close_session(self):
     r = requests.post(ENDPOINT, json={'action': 'close_session', 'sessionId': self.sessionId})
-    if r.json()['state'] == "SUCCEEDED":
-      print(f"Session %s is closed" % self.sessionId)
-    else :
+
+  @staticmethod
+  def close_session(sessionId):
+    r = requests.post(ENDPOINT, json={'action': 'close_session', 'sessionId': sessionId})
+    if not r.json()['state'] == "SUCCEEDED":
       print(r.json()['message'])
+

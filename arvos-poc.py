@@ -4,8 +4,8 @@ from datetime import datetime
 from time import sleep
 from bcc import BPF, USDT
 import json
-import os
-from parsexml import parse_xml
+import os, sys
+from parsexml import parse_xml, getArtifactId, getGroupId
 from packaging.version import parse
 from packaging.specifiers import SpecifierSet
 import arthas
@@ -42,7 +42,7 @@ def filter_relevant_vulnerabilities(db, dependencies):
                         version_range = list(filter(lambda e: e[1] != '~', list(vuln['package_version_range'].items())))
                     specifier_set = ",".join(list(map(lambda e: operators[e[0]] + e[1],version_range)))
                     if not package_version in SpecifierSet(specifier_set):
-                        print("%s not  %s" % (package_version, specifier_set))
+                        # print("%s not  %s" % (package_version, specifier_set))
                         indices_to_be_deleted.append(index)
     for i in sorted(indices_to_be_deleted, reverse=True):
         del db[i]
@@ -59,7 +59,7 @@ def pull_results(art):
             if result['jobId'] == 0 :
               continue
             if result['type'] == 'status' and result['statusCode'] == -1:
-              print("Skipping symbol %s as it was not loaded in the JVM" % ".".join(art.command.split(" ")[1:]))
+            #   print("Skipping symbol %s as it was not loaded in the JVM" % ".".join(art.command.split(" ")[1:]))
               gotResults = True
               art.interrupt_job()
               art.close_session()
@@ -199,7 +199,6 @@ while TRACE_TIME != 0:
                 if sym['class_name'] in invoked_class_list[i] and sym['method_name'] in invoked_method_list[i]:
                     traced = sym['class_name'] + " " + sym['method_name']
                     if not traced in seen :
-                        vuln_count += 1 
                         art = arthas.Arthas()
                         art.async_exec("stack %s" % traced)
                         seen.append(traced)
@@ -207,7 +206,6 @@ while TRACE_TIME != 0:
                         parallel_functions.append(ref)
 
 
-print("Closing all arthas sessions..")
 for session in opened_sessions:
     arthas.Arthas.close_session(session)
 
@@ -238,7 +236,6 @@ if args['save_report']:
     for x in report_description.split("\n"):
         pdf.cell(200, 10, txt = x, ln = 1)
 
-
 for stackfile in os.listdir(STACKS_DIR):
   f = os.path.join(STACKS_DIR, stackfile)
   symbol = stackfile[:-6]
@@ -247,19 +244,30 @@ for stackfile in os.listdir(STACKS_DIR):
   for item in vuln_obj:
     for sym in item['symbols']:
       if class_name == sym['class_name'] and method_name == sym['method_name']:
-        print(f"\n{bcolors.FAIL}Vulnerable symbol invoked!!!")
-        print(f"\t{bcolors.FAIL}Vulnerability:{bcolors.ENDC} {item['vulnerability']}")
-        print(f"\t{bcolors.FAIL}Repository:{bcolors.ENDC} {item['repository']}")
-        print(f"\t{bcolors.FAIL}Invoked Class:{bcolors.ENDC} {sym['class_name']}")
-        print(f"\t{bcolors.FAIL}Invoked Method:{bcolors.ENDC} {sym['method_name']}")
-        print(f"\t{bcolors.FAIL}Confidence:{bcolors.ENDC} {item['confidence']}")
-        print(f"\t{bcolors.FAIL}Spread:{bcolors.ENDC} {item['spread']}")
-        print(f"\t{bcolors.FAIL}Package name:{bcolors.ENDC} {item['package_name']}")
-        print(f"\t{bcolors.FAIL}Package manager:{bcolors.ENDC} {item['package_manager']}")
-        print(f"\t{bcolors.FAIL}Version range:{bcolors.ENDC} {item['package_version_range']}")
-        print(f"\t{bcolors.FAIL}Stack trace:{bcolors.ENDC}")
-        print("\t", open(f).read())
-        print("------------------------------------------------------------------------------")
+        vuln_count += 1 
+        print(f"\n{bcolors.BOLD}The following vulnerable symbol has been invoked : \n{bcolors.ENDC}")
+        print(f"\t{bcolors.FAIL}{bcolors.BOLD}Vulnerability:{bcolors.ENDC} {item['vulnerability']}")
+        print(f"\t{bcolors.FAIL}{bcolors.BOLD}Github Repository:{bcolors.ENDC} https://github.com/{item['repository']}")
+        print(f"\t{bcolors.FAIL}{bcolors.BOLD}Invoked Class:{bcolors.ENDC} {sym['class_name']}")
+        print(f"\t{bcolors.FAIL}{bcolors.BOLD}Invoked Method:{bcolors.ENDC} {sym['method_name']}")
+        # print(f"\t{bcolors.FAIL}Confidence:{bcolors.ENDC} {item['confidence']}")
+        # print(f"\t{bcolors.FAIL}Spread:{bcolors.ENDC} {item['spread']}")
+        print(f"\t{bcolors.FAIL}{bcolors.BOLD}Package name:{bcolors.ENDC} {item['package_name']}")
+        print(f"\t{bcolors.FAIL}{bcolors.BOLD}Package manager:{bcolors.ENDC} {item['package_manager']}")
+        print(f"\t{bcolors.FAIL}{bcolors.BOLD}Version range:{bcolors.ENDC} {item['package_version_range']}")
+        print(f"\t{bcolors.FAIL}{bcolors.BOLD}Stack trace:{bcolors.ENDC}")
+        stackTrace = open(f).readlines()
+        tailIdx = len(stackTrace) - 1 
+        if args['pom']:
+            appGroupId = getGroupId(pom_file)
+            for i, s in enumerate(stackTrace):
+                if appGroupId in s:
+                    stackTrace[i] = f"{bcolors.WARNING}{bcolors.BOLD}{s}{bcolors.ENDC}"
+                    tailIdx = i
+        
+        print("\t\t" + "\t\t".join(stackTrace[:tailIdx + 3]))
+
+        print(f"{bcolors.OKGREEN}{bcolors.BOLD}----------------------------------------------------------------------------------------------------------------------------------{bcolors.ENDC}")
         if args['save_report']:
             pdf.add_page()
             pdf.set_font("Arial", size = 8)    
@@ -309,3 +317,8 @@ if args['save_report']:
     pdf.output("/stacks/arvos-report.pdf")   
 
 
+if vuln_count != 0 :
+    print(f"{bcolors.FAIL}[FAIL]{bcolors.ENDC} We found {vuln_count} vulnerable symbols being used in your application.")
+    sys.exit(1)
+else :
+    print(f"\t{bcolors.OKGREEN}[SUCCESS]{bcolors.ENDC} No vulnerable symbol has been found in your application.")

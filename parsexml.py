@@ -38,3 +38,19 @@ def parse_xml(filename):
         dep_list.append({"groupId": groupId_text,"artifactId": artifactId_text, "version": version_text})
 
     return dep_list
+
+def getGroupId(filename):
+    namespaces = {'xmlns' : 'http://maven.apache.org/POM/4.0.0'}
+
+    tree = ElementTree.parse(filename)
+    root = tree.getroot()    
+
+    return root.find("xmlns:groupId", namespaces=namespaces).text
+
+def getArtifactId(filename):
+    namespaces = {'xmlns' : 'http://maven.apache.org/POM/4.0.0'}
+
+    tree = ElementTree.parse(filename)
+    root = tree.getroot()
+
+    return root.find("xmlns:artifactId", namespaces=namespaces).text
