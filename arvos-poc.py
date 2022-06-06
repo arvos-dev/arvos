@@ -16,7 +16,7 @@ from fpdf import FPDF
 # Tracing time in minutes
 TRACE_TIME = int(os.getenv('TRACE_TIME', 1)) * 6
 # period
-PERIOD = 10
+PERIOD = 5
 ENDPOINT = "http://localhost:8563/api"
 STACKS_DIR = "/stacks"
 OPERATORS = {
@@ -208,7 +208,7 @@ while TRACE_TIME != 0:
                         art.async_exec("stack %s" % traced)
                         seen.append(traced)
                         ref = pull_results.remote(art)
-                        parallel_functions.append(ref)
+                        # parallel_functions.append(ref)
 
 
 for session in opened_sessions:
