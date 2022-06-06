@@ -16,7 +16,7 @@ from fpdf import FPDF
 # Tracing time in minutes
 TRACE_TIME = int(os.getenv('TRACE_TIME', 1)) * 6
 # period
-PERIOD = 5
+PERIOD = 10
 ENDPOINT = "http://localhost:8563/api"
 STACKS_DIR = "/stacks"
 OPERATORS = {
