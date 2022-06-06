@@ -19,16 +19,21 @@ TRACE_TIME = int(os.getenv('TRACE_TIME', 1)) * 6
 PERIOD = 10
 ENDPOINT = "http://localhost:8563/api"
 STACKS_DIR = "/stacks"
+OPERATORS = {
+    "gt": ">",
+    "gte": ">=",
+    "lt": "<",
+    "lte": "<="
+}
+
 ray.init()
 
+def parse_version_range(version_range):
+    output = list(filter(lambda e: e[1] != '~', list(version_range.items())))
+    return  ",".join(list(map(lambda e: OPERATORS[e[0]] + e[1], output)))
+
 def filter_relevant_vulnerabilities(db, dependencies):
-    operators = {
-        "gt": ">",
-        "gte": ">=",
-        "lt": "<",
-        "lte": "<="
-    }
-    
+
     indices_to_be_deleted = []
     for dep in dependencies:
         if dep['version']:
@@ -40,7 +45,7 @@ def filter_relevant_vulnerabilities(db, dependencies):
                         version_range = list(filter(lambda e: e[1] != '~', list(vuln['cpe_version_range'].items())))
                     else :
                         version_range = list(filter(lambda e: e[1] != '~', list(vuln['package_version_range'].items())))
-                    specifier_set = ",".join(list(map(lambda e: operators[e[0]] + e[1],version_range)))
+                    specifier_set = ",".join(list(map(lambda e: OPERATORS[e[0]] + e[1],version_range)))
                     if not package_version in SpecifierSet(specifier_set):
                         # print("%s not  %s" % (package_version, specifier_set))
                         indices_to_be_deleted.append(index)
@@ -254,7 +259,7 @@ for stackfile in os.listdir(STACKS_DIR):
         # print(f"\t{bcolors.FAIL}Spread:{bcolors.ENDC} {item['spread']}")
         print(f"\t{bcolors.FAIL}{bcolors.BOLD}Package name:{bcolors.ENDC} {item['package_name']}")
         print(f"\t{bcolors.FAIL}{bcolors.BOLD}Package manager:{bcolors.ENDC} {item['package_manager']}")
-        print(f"\t{bcolors.FAIL}{bcolors.BOLD}Version range:{bcolors.ENDC} {item['package_version_range']}")
+        print(f"\t{bcolors.FAIL}{bcolors.BOLD}Version range:{bcolors.ENDC} { parse_version_range(item['package_version_range']) }")
         print(f"\t{bcolors.FAIL}{bcolors.BOLD}Stack trace:{bcolors.ENDC}")
         stackTrace = open(f).readlines()
         tailIdx = len(stackTrace) - 1 
