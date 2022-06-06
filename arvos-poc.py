@@ -310,7 +310,7 @@ for stackfile in os.listdir(STACKS_DIR):
             pdf.set_text_color(255,0,0)
             pdf.cell(180,5, txt = "Version range:", ln=1, border=1)
             pdf.set_text_color(0,0,0)
-            pdf.cell(180,5, txt = json.dumps(item['package_version_range']), ln=1)
+            pdf.cell(180,5, txt = parse_version_range(item['package_version_range']), ln=1)
 
             pdf.set_text_color(255,0,0)
             pdf.cell(180,5, txt = "Stack Trace:", border=1,ln=1)
