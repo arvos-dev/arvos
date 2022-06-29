@@ -187,6 +187,7 @@ seen  = []
 parallel_functions  = []
 opened_sessions = []
 
+
 while TRACE_TIME != 0:
     TRACE_TIME -= 1 
     sleep(PERIOD)
@@ -207,12 +208,12 @@ while TRACE_TIME != 0:
                         art = arthas.Arthas()
                         art.async_exec("stack %s" % traced)
                         seen.append(traced)
+                        # opened_sessions.append(art.sessionId)
                         ref = pull_results.remote(art)
-                        # parallel_functions.append(ref)
 
 
-for session in opened_sessions:
-    arthas.Arthas.close_session(session)
+# for session in opened_sessions:
+#     arthas.Arthas.close_session(session)
 
 print("Generating Report ...")
 
