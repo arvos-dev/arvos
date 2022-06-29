@@ -67,7 +67,7 @@ def pull_results(art):
             #   print("Skipping symbol %s as it was not loaded in the JVM" % ".".join(art.command.split(" ")[1:]))
               gotResults = True
               art.interrupt_job()
-              art.close_session()
+            #   art.close_session()
             if result['jobId'] != 0  and result['type'] == "stack":
               gotResults = True
               with open(f"%s/%s.stack" % (STACKS_DIR, ".".join(art.command.split(" ")[1:])), "w") as f:
@@ -75,7 +75,7 @@ def pull_results(art):
                     if 'fileName' in stacktrace.keys():
                       f.write("at %s.%s(%s:%s) \n" % (stacktrace['className'], stacktrace['methodName'], stacktrace['fileName'], stacktrace['lineNumber']))
               art.interrupt_job()
-              art.close_session()
+            #   art.close_session()
               break
         else :
           sleep(2)
