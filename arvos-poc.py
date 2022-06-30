@@ -205,6 +205,7 @@ while TRACE_TIME != 0:
                 if sym['class_name'] in invoked_class_list[i] and sym['method_name'] in invoked_method_list[i]:
                     traced = sym['class_name'] + " " + sym['method_name']
                     if not traced in seen :
+                        vuln_count += 1 
                         art = arthas.Arthas()
                         art.async_exec("stack %s" % traced)
                         seen.append(traced)
@@ -250,7 +251,6 @@ for stackfile in os.listdir(STACKS_DIR):
   for item in vuln_obj:
     for sym in item['symbols']:
       if class_name == sym['class_name'] and method_name == sym['method_name']:
-        vuln_count += 1 
         print(f"\n{bcolors.BOLD}The following vulnerable symbol has been invoked : \n{bcolors.ENDC}")
         print(f"\t{bcolors.FAIL}{bcolors.BOLD}Vulnerability:{bcolors.ENDC} {item['vulnerability']}")
         print(f"\t{bcolors.FAIL}{bcolors.BOLD}Github Repository:{bcolors.ENDC} https://github.com/{item['repository']}")
