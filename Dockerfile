@@ -4,11 +4,12 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt update && apt -y upgrade && apt -y install python3.9 python3-pip bcc python3-bpfcc bpfcc-tools linux-headers-$(uname -r)
 
-RUN pip3 install pandas parsexml
+RUN pip3 install pandas packaging ray fpdf && mkdir -p /stacks
 
 COPY arvos-poc.py /arvos-poc.py
+COPY arthas.py /arthas.py
 COPY parsexml.py /parsexml.py
-COPY arvos_vfs.json /arvos_vfs.json
+COPY arvos_vfs_java.json /arvos_vfs_java.json
 
 RUN chmod +x arvos-poc.py && chmod 755 arvos-poc.py
 
