@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import argparse
 from datetime import datetime
+from collections import defaultdict 
 from time import sleep
 from bcc import BPF, USDT
 import json
@@ -104,6 +105,7 @@ parser.add_argument("-v", "--verbose", action="store_true",
     help="verbose mode: print the BPF program (for debugging purposes)")
 parser.add_argument("--pom", "--only-versions-from-pom", type=str)
 parser.add_argument("--save-report", help="Save report as pdf", action="store_true")
+parser.add_argument("--show-all", help="Show detailed output", action="store_true")
 
 args = vars(parser.parse_args())
 # pom file parser
@@ -243,6 +245,8 @@ if args['save_report']:
     for x in report_description.split("\n"):
         pdf.cell(200, 10, txt = x, ln = 1)
 
+cve_hist = defaultdict(list)
+
 for stackfile in os.listdir(STACKS_DIR):
   f = os.path.join(STACKS_DIR, stackfile)
   symbol = stackfile[:-6]
@@ -251,17 +255,7 @@ for stackfile in os.listdir(STACKS_DIR):
   for item in vuln_obj:
     for sym in item['symbols']:
       if class_name == sym['class_name'] and method_name == sym['method_name']:
-        print(f"\n{bcolors.BOLD}The following vulnerable symbol has been invoked : \n{bcolors.ENDC}")
-        print(f"\t{bcolors.FAIL}{bcolors.BOLD}Vulnerability:{bcolors.ENDC} {item['vulnerability']}")
-        print(f"\t{bcolors.FAIL}{bcolors.BOLD}Github Repository:{bcolors.ENDC} https://github.com/{item['repository']}")
-        print(f"\t{bcolors.FAIL}{bcolors.BOLD}Invoked Class:{bcolors.ENDC} {sym['class_name']}")
-        print(f"\t{bcolors.FAIL}{bcolors.BOLD}Invoked Method:{bcolors.ENDC} {sym['method_name']}")
-        # print(f"\t{bcolors.FAIL}Confidence:{bcolors.ENDC} {item['confidence']}")
-        # print(f"\t{bcolors.FAIL}Spread:{bcolors.ENDC} {item['spread']}")
-        print(f"\t{bcolors.FAIL}{bcolors.BOLD}Package name:{bcolors.ENDC} {item['package_name']}")
-        print(f"\t{bcolors.FAIL}{bcolors.BOLD}Package manager:{bcolors.ENDC} {item['package_manager']}")
-        print(f"\t{bcolors.FAIL}{bcolors.BOLD}Version range:{bcolors.ENDC} { parse_version_range(item['package_version_range']) }")
-        print(f"\t{bcolors.FAIL}{bcolors.BOLD}Stack trace:{bcolors.ENDC}")
+
         stackTrace = open(f).readlines()
         tailIdx = len(stackTrace) - 1 
         if args['pom']:
@@ -269,11 +263,28 @@ for stackfile in os.listdir(STACKS_DIR):
             for i, s in enumerate(stackTrace):
                 if appGroupId in s:
                     stackTrace[i] = f"{bcolors.WARNING}{bcolors.BOLD}{s}{bcolors.ENDC}"
+                    cve_hist[item['vulnerability']].append({
+                      'class_name': class_name,
+                      'method_name': method_name,
+                      'stacktrace': stackTrace[i]
+                    })
                     tailIdx = i
-        
-        print("\t\t" + "\t\t".join(stackTrace[:tailIdx + 3]))
 
-        print(f"{bcolors.OKGREEN}{bcolors.BOLD}----------------------------------------------------------------------------------------------------------------------------------{bcolors.ENDC}")
+        if args['show_all']:
+          print(f"\n{bcolors.BOLD}The following vulnerable symbol has been invoked : \n{bcolors.ENDC}")
+          print(f"\t{bcolors.FAIL}{bcolors.BOLD}Vulnerability:{bcolors.ENDC} {item['vulnerability']}")
+          print(f"\t{bcolors.FAIL}{bcolors.BOLD}Github Repository:{bcolors.ENDC} https://github.com/{item['repository']}")
+          print(f"\t{bcolors.FAIL}{bcolors.BOLD}Invoked Class:{bcolors.ENDC} {sym['class_name']}")
+          print(f"\t{bcolors.FAIL}{bcolors.BOLD}Invoked Method:{bcolors.ENDC} {sym['method_name']}")
+          # print(f"\t{bcolors.FAIL}Confidence:{bcolors.ENDC} {item['confidence']}")
+          # print(f"\t{bcolors.FAIL}Spread:{bcolors.ENDC} {item['spread']}")
+          print(f"\t{bcolors.FAIL}{bcolors.BOLD}Package name:{bcolors.ENDC} {item['package_name']}")
+          print(f"\t{bcolors.FAIL}{bcolors.BOLD}Package manager:{bcolors.ENDC} {item['package_manager']}")
+          print(f"\t{bcolors.FAIL}{bcolors.BOLD}Version range:{bcolors.ENDC} { parse_version_range(item['package_version_range']) }")
+          print(f"\t{bcolors.FAIL}{bcolors.BOLD}Stack trace:{bcolors.ENDC}")
+          print("\t\t" + "\t\t".join(stackTrace[:tailIdx + 3]))
+          print(f"{bcolors.OKGREEN}{bcolors.BOLD}----------------------------------------------------------------------------------------------------------------------------------{bcolors.ENDC}")
+
         if args['save_report']:
             pdf.add_page()
             pdf.set_font("Arial", size = 8)    
@@ -318,6 +329,15 @@ for stackfile in os.listdir(STACKS_DIR):
             pdf.set_text_color(0,0,0)
             pdf.set_font("Arial", size = 7)    
             pdf.multi_cell(180, 5, txt = " ".join(open(f).readlines()[:35]), border=1)
+
+if not args['show_all']:
+  for cve, occurences in cve_hist.items():
+    print(f"\n{bcolors.BOLD}The following CVE : {bcolors.FAIL}{cve}{bcolors.ENDC} is affecting {len(occurences)} code paths: \n{bcolors.ENDC}")
+    for symbol in occurences:
+      print(f"\t {bcolors.BOLD}* {symbol['class_name']}.{symbol['method_name']}{bcolors.ENDC} is a vulnerable symbol called by : {symbol['stacktrace']}")
+      
+    print(f"{bcolors.OKGREEN}{bcolors.BOLD}----------------------------------------------------------------------------------------------------------------------------------{bcolors.ENDC}")
+
 
 if args['save_report']:
     pdf.output("/stacks/arvos-report.pdf")   
