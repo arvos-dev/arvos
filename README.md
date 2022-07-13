@@ -47,25 +47,34 @@ The exact CLI and output (e.g., human-readable, colored terminal, CSV, JSON) are
 
 ### Using a demo Java application in Docker
 
-1. In a terminal run the demo Java application (containing netty dependencies) using Docker.
+> Requirements: 
+
+- Python >= 3.9 and pip installed
+- Docker installed
+- Debugfs mounted ( sudo mount -t debugfs debugfs /sys/kernel/debug )
+
+
+> Steps : 
+
+1. Install arvos cli
 
     ```
-    docker run -d --name app -p 8080:8080 -v $PWD/logs:/stack_logs moule3053/netty-demo
+    pip install arvos
     ```
-2. After a few moments, run the following command to call two endpoints of the application.
+
+2. Run arvos 
 
     ```
-    while true; do curl http://localhost:8080/actuator/health; curl http://localhost:8080/actuator/info; done
+    arvos --demo --save-report
     ```
-3. In a second terminal, run the following commands to generate stack traces and to run the tracer application `arvos-poc`.
+
+3. In a separate terminal, run the following command to generate some workload : 
 
     ```
-    export APP=app
-    docker exec -it $APP /bin/bash -c "/get_stack_traces.sh" && docker pull moule3053/arvos-poc && docker run -it --rm -v $PWD/logs:/stack_logs -v /lib/modules/$(uname -r):/lib/modules/$(uname -r) -v /usr/src:/usr/src --privileged --pid container:$APP moule3053/arvos-poc $(docker exec -ti $APP pidof java)
+    while true; do curl -Ikq http://localhost:8080/vulnerable; curl -Ikq http://localhost:8080/decompress; sleep 2; done
     ```
-4. If everything goes well, you should see something like the following figure.
-   ![Screenshot from 2022-02-11 09-31-27](https://user-images.githubusercontent.com/14330171/153579834-872f6007-ff5a-43aa-8898-6613cd350ce0.png)
 
+4. Once done, you can check the arvos logs in the console by running `docker logs -f tracer`, or by checking the generated pdf report file under $HOME/arvos-reports/.
 ### Using your own Java application using Docker
 
 To scan your own Java application, you need to:
