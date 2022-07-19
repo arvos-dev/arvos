@@ -65,7 +65,7 @@ The exact CLI and output (e.g., human-readable, colored terminal, CSV, JSON) are
 2. Run arvos 
 
     ```
-    arvos --demo --save-report
+    arvos --demo
     ```
 
 3. In a separate terminal, run the following command to generate some workload : 
