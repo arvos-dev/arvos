@@ -45,14 +45,16 @@ The exact CLI and output (e.g., human-readable, colored terminal, CSV, JSON) are
 
 ## Running ARVOS PoC
 
-### Using a demo Java application in Docker
-
 > Requirements: 
 
 - Python >= 3.9 and pip installed
 - Docker installed
 - Debugfs mounted ( sudo mount -t debugfs debugfs /sys/kernel/debug )
-
+- Linux kernel headers installed
+    - Ubuntu/Debian : apt-get install -y linux-headers-$(uname -r)
+    - CentOs : yum install -y kernel-devel
+    - Fedora : dnf install -y kernel-devel
+### Using a demo Java application in Docker
 
 > Steps : 
 
@@ -79,34 +81,14 @@ The exact CLI and output (e.g., human-readable, colored terminal, CSV, JSON) are
 
 To scan your own Java application, you need to:
 
-1. Build a `jar` file for your application. Your application should be able to run in JVM 17.
-2. Create a Docker image for your application based on the `ayoubensalem/jdk-docker-jstack` Docker image. Create a `Dockerfile` that looks like the below in the same directory where your `jar` file resides.
+1. Build a `jar` file for your application. Your application should be able to run in JVM 17 or 18.
+2. Install arvos cli 
     ```
-    FROM ayoubensalem/jdk-docker-jstack
-    COPY YOUR-APPLICATION.jar ./application.jar
+    pip install arvos
     ```
-3. Replace `YOUR-APPLICATION` in the above two file with the name of your `jar` file.
-4. Build the Docker image
+3. Run arvos against your application
     ```
-    docker build -t YOUR-DOCKER-REGISTRY/APPLICATION-IMAGE-NAME .
+    arvos scan --java 17 --jar target/application.jar --pom pom.xml --trace-period 2 --save-report
     ```
-5. In a first terminal, run your application using Docker.
-    ```
-    docker run -d --name app --net host  YOUR-DOCKER-REGISTRY/APPLICATION-IMAGE-NAME
-    ```
-6. Continuously call a few endppoints of your application.
-7. In a second terminal, run the following commands to generate stack traces and to run the tracer application `arvos-poc`.
-
-    - Make sure the debugfs is mounted : 
-        ```
-        sudo mount -t debugfs debugfs /sys/kernel/debug
-        ```
-    - Run arthas diagnosis tool :
-        ```
-        export APP=app
-        docker exec -it $APP /bin/bash -c "/jdk/bin/java -jar arthas-boot.jar --attach-only --select application.jar"
-        ``` 
-    - Run the tracer app : 
-        ```
-        docker run -it --rm --net host -e TRACE_TIME=2 -v /sys/kernel/debug:/sys/kernel/debug:rw -v /lib/modules/$(uname -r):/lib/modules/$(uname -r) -v /usr/src:/usr/src --privileged --pid container:$APP ayoubensalem/arvos-poc $(docker exec -ti $APP pidof java)
-        ```
+6. Call a few endpoints of your application multiple times (either using curl like tool or a browser)
+7. Once the scan is done, you can check the report on the console by running `docker logs -f tracer`, or as a .pdf file under your home directory.
