@@ -13,9 +13,12 @@ import arthas
 import requests
 import ray
 from fpdf import FPDF
+import signal
+
+
 
 # Tracing time in minutes
-TRACE_TIME = int(os.getenv('TRACE_TIME', 1)) * 6
+TRACE_TIME = int(os.getenv('TRACE_TIME', sys.maxsize)) * 6
 # period
 PERIOD = 10
 ENDPOINT = "http://localhost:8563/api"
@@ -28,6 +31,14 @@ OPERATORS = {
 }
 
 ray.init()
+
+def signal_handler(signal, frame):
+    global interrupted
+    interrupted = True
+
+signal.signal(signal.SIGTERM, signal_handler)
+# signal.signal(signal.SIGKILL, signal_handler)
+signal.signal(signal.SIGINT, signal_handler)
 
 def parse_version_range(version_range):
     output = list(filter(lambda e: e[1] != '~', list(version_range.items())))
@@ -182,13 +193,14 @@ else :
 # keep track of invoked vulnerable symbols
 vuln_count = 0
 
-print(f"{bcolors.OKGREEN}\nTracing Java calls in process %d and scanning for vulnerable symbols ... Ctrl-C to quit.{bcolors.ENDC}" % (args['pid']))
+print(f"{bcolors.OKGREEN}\nTracing Java calls in process %d and scanning for vulnerable symbols ... Ctrl-C to stop.{bcolors.ENDC}" % (args['pid']))
 
 # Loop until exit
 seen  = []
 parallel_functions  = []
 opened_sessions = []
 
+interrupted = False
 
 while TRACE_TIME != 0:
     TRACE_TIME -= 1 
@@ -214,6 +226,9 @@ while TRACE_TIME != 0:
                         # opened_sessions.append(art.sessionId)
                         ref = pull_results.remote(art)
 
+    if interrupted:
+        print(f"{bcolors.OKGREEN}\n Stopping the tracer .{bcolors.ENDC}")
+        break
 
 # for session in opened_sessions:
 #     arthas.Arthas.close_session(session)
@@ -273,15 +288,16 @@ for stackfile in os.listdir(STACKS_DIR):
         if args['show_all']:
           print(f"\n{bcolors.BOLD}The following vulnerable symbol has been invoked : \n{bcolors.ENDC}")
           print(f"\t{bcolors.FAIL}{bcolors.BOLD}Vulnerability:{bcolors.ENDC} {item['vulnerability']}")
-          print(f"\t{bcolors.FAIL}{bcolors.BOLD}Github Repository:{bcolors.ENDC} https://github.com/{item['repository']}")
+          print(f"\t{bcolors.FAIL}{bcolors.BOLD}Vulnerability Detail:{bcolors.ENDC} https://nvd.nist.gov/vuln/detail/{item['vulnerability']}")
           print(f"\t{bcolors.FAIL}{bcolors.BOLD}Invoked Class:{bcolors.ENDC} {sym['class_name']}")
           print(f"\t{bcolors.FAIL}{bcolors.BOLD}Invoked Method:{bcolors.ENDC} {sym['method_name']}")
           # print(f"\t{bcolors.FAIL}Confidence:{bcolors.ENDC} {item['confidence']}")
           # print(f"\t{bcolors.FAIL}Spread:{bcolors.ENDC} {item['spread']}")
           print(f"\t{bcolors.FAIL}{bcolors.BOLD}Package name:{bcolors.ENDC} {item['package_name']}")
+          print(f"\t{bcolors.FAIL}{bcolors.BOLD}Github Repository:{bcolors.ENDC} https://github.com/{item['repository']}")
           print(f"\t{bcolors.FAIL}{bcolors.BOLD}Package manager:{bcolors.ENDC} {item['package_manager']}")
           print(f"\t{bcolors.FAIL}{bcolors.BOLD}Version range:{bcolors.ENDC} { parse_version_range(item['package_version_range']) }")
-          print(f"\t{bcolors.FAIL}{bcolors.BOLD}Stack trace:{bcolors.ENDC}")
+          print(f"\t{bcolors.FAIL}{bcolors.BOLD}Stacktrace:{bcolors.ENDC}")
           print("\t\t" + "\t\t".join(stackTrace[:tailIdx + 3]))
           print(f"{bcolors.OKGREEN}{bcolors.BOLD}----------------------------------------------------------------------------------------------------------------------------------{bcolors.ENDC}")
 
@@ -293,6 +309,11 @@ for stackfile in os.listdir(STACKS_DIR):
             pdf.cell(180,5, txt = "Vulnerability:", ln=1, border=1)
             pdf.set_text_color(0,0,0)
             pdf.cell(180,5, txt = item['vulnerability'], ln=1)
+
+            pdf.set_text_color(255,0,0)
+            pdf.cell(180,5, txt = "Vulnerability Detail:", ln=1, border=1)
+            pdf.set_text_color(0,0,0)
+            pdf.cell(180,5, txt = "https://nvd.nist.gov/vuln/detail/" + item['vulnerability'], ln=1)
 
             pdf.set_text_color(255,0,0)
             pdf.cell(180,5, txt = "Github Repository:", ln=1, border=1)
