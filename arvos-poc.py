@@ -219,7 +219,6 @@ while TRACE_TIME != 0:
                 if sym['class_name'] in invoked_class_list[i] and sym['method_name'] in invoked_method_list[i]:
                     traced = sym['class_name'] + " " + sym['method_name']
                     if not traced in seen :
-                        vuln_count += 1 
                         art = arthas.Arthas()
                         art.async_exec("stack %s" % traced)
                         seen.append(traced)
@@ -270,7 +269,7 @@ for stackfile in os.listdir(STACKS_DIR):
   for item in vuln_obj:
     for sym in item['symbols']:
       if class_name == sym['class_name'] and method_name == sym['method_name']:
-
+        vuln_count += 1 
         stackTrace = open(f).readlines()
         tailIdx = len(stackTrace) - 1 
         if args['pom']:
