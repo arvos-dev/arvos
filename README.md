@@ -73,7 +73,7 @@ The exact CLI and output (e.g., human-readable, colored terminal, CSV, JSON) are
 3. In a separate terminal, run the following command to generate some workload : 
 
     ```
-    while true; do curl -Ikq http://localhost:8080/vulnerable; curl -Ikq http://localhost:8080/decompress; sleep 2; done
+    while true; do curl -Ikq http://localhost:8080/sanitize; curl -Ikq http://localhost:8080/xstream; sleep 2; done
     ```
 
 4. Once done, you can check the arvos logs in the console by running `docker logs -f tracer`, or by checking the generated pdf report file under $HOME/arvos-reports/.
