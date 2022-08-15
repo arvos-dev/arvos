@@ -64,7 +64,7 @@ The exact CLI and output (e.g., human-readable, colored terminal, CSV, JSON) are
     pip install arvos
     ```
 
-2. Run arvos 
+2. Make sure the port 8080 is not used, and run arvos 
 
     ```
     arvos --demo
