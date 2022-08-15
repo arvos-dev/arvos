@@ -82,6 +82,7 @@ The exact CLI and output (e.g., human-readable, colored terminal, CSV, JSON) are
 To scan your own Java application, you need to:
 
 1. Build a `jar` file for your application. Your application should be able to run in JVM 17 or 18.
+
 2. Install arvos cli 
     ```
     pip install arvos
@@ -90,5 +91,13 @@ To scan your own Java application, you need to:
     ```
     arvos scan --java 17 --jar target/application.jar --pom pom.xml --trace-period 2 --save-report
     ```
-6. Call a few endpoints of your application multiple times (either using curl like tool or a browser)
-7. Once the scan is done, you can check the report on the console by running `docker logs -f tracer`, or as a .pdf file under your home directory.
+
+    > You can run the arvos scanner indefinitely by not specifying the --trace-period argument
+
+6. Call a few endpoints of your application multiple times (either using curl .. or a browser)
+
+7. You can either wait for the arvos scan to finish or stop it manually by running : 
+    ```
+    arvos --stop
+    ```
+    and check the generated report either on the console by running `docker logs -f tracer`, or as a .pdf file under your home directory.
