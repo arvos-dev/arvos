@@ -1,0 +1,133 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "JSON Schema for Arvos Vulnerable Function Symbols Feed version 1.0",
+  "id": "https://github.com/arvos-dev/arvos/vfs_scheme.schema",
+  "definitions": {
+    "def_symbol": {
+      "description": "Vuln Func Symbol",
+      "type": "object",
+      "properties": {
+        "footprint": {
+          "type": "string"
+        },
+        "parameters": {
+          "type": "string"
+        },
+        "method_name": {
+          "type": "string"
+        },
+        "class_name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "footprint",
+        "parameters",
+        "method_name",
+        "class_name"
+      ]
+    },
+    "def_version_range": {
+      "description": "Version Range for a vulnerability",
+      "type": "object",
+      "properties": {
+        "gt": {
+          "type": "string"
+        },
+        "gte": {
+          "type": "string"
+        },
+        "lt": {
+          "type": "string"
+        },
+        "lte": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "gt",
+        "gte",
+        "lt",
+        "lte"
+      ]
+    },
+    "def_vulnfunc": {
+      "description": "Defines a Vulnerable Function.",
+      "properties": {
+        "vulnerability": {
+          "description": "Vulnerability ID, such as a CVE",
+          "type": "string"
+        },
+        "repository": {
+          "type": "string"
+        },
+        "symbols": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/def_symbol"
+          }
+        },
+        "language": {
+          "type": "string"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "spread": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "updated_at": {
+          "type": "string"
+        },
+        "package_name": {
+          "type": "string"
+        },
+        "package_manager": {
+          "type": "string"
+        },
+        "cpe_version_range": {
+          "type": "object",
+          "items": {
+            "$ref": "#/definitions/def_version_range"
+          }
+        },
+        "package_version_range": {
+          "type": "object",
+          "items": {
+            "$ref": "#/definitions/def_version_range"
+          }
+        }
+      },
+      "required": [
+        "vulnerability",
+        "repository",
+        "symbols",
+        "language",
+        "confidence",
+        "spead",
+        "updated_at",
+        "package_name",
+        "package_manager",
+        "cpe_version_range"
+        "package_version_range"
+      ]
+    }
+  },
+  "type": "object",
+  "properties": {
+    "VF_items": {
+      "description": "Items containing Vulnerable Functions",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/def_vulnfunc"
+      }
+    }
+  },
+  "required": [
+    "VF_items"
+  ]
+}
