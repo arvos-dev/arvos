@@ -76,7 +76,8 @@ The exact CLI and output (e.g., human-readable, colored terminal, CSV, JSON) are
     while true; do curl -Ikq http://localhost:8080/sanitize; curl -Ikq http://localhost:8080/xstream; sleep 2; done
     ```
 
-4. Once done, you can check the arvos logs in the console by running `docker logs -f tracer`, or by checking the generated pdf report file under $HOME/arvos-reports/.
+4. Once done, you can check the arvos logs in the console by running `docker logs -f tracer`.
+
 ### Using your own Java application using Docker
 
 To scan your own Java application, you need to:
@@ -89,7 +90,7 @@ To scan your own Java application, you need to:
     ```
 3. Run arvos against your application
     ```
-    arvos scan --java 17 --jar target/application.jar --pom pom.xml --trace-period 2 --save-report
+    arvos scan --java 17 --jar target/application.jar --pom pom.xml --trace-period 2 --save-report pdf
     ```
 
     > You can run the arvos scanner indefinitely by not specifying the --trace-period argument
