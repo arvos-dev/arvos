@@ -211,7 +211,7 @@ if args['verbose']:
     print(program)
 
 # Attach BPF program to USDT probes
-bpf = BPF(text=program, usdt_contexts=[usdt] if usdt else [])
+bpf = BPF(text=program, usdt_contexts=[usdt] if usdt else [], cflags=["-Wno-macro-redefined"])
 
 # Load vulnerability dataset
 f = 'arvos_vfs_java.json'
